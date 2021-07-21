@@ -1,0 +1,129 @@
+<div class=" col-12 clearfix d-flex justify-content-center">
+  
+  <div class="people-list" id="people-list">
+    <div class="mr-4">
+      <button class="btn btn-warning btn-block btn-md" *ngIf="this.userData['admin']=== 1" (click)="gestionarGrupos()"><i class="fas fa-users fa-lg icon-color-blue " ></i> Gestionar grupos </button>
+    <button class="btn btn-info btn-block btn-md" (click)="agregarUsuario()"><i class="fas fa-user-plus fa-lg icon-color-blue "></i> Agregar usuario </button>
+  </div>
+    <div class=" ">
+    
+      <input type="text" placeholder="Buscar usuario" [(ngModel)]="searchText" />
+      <i class="fa fa-search"></i>
+    </div>
+    
+  
+    <p-progressSpinner class="d-flex justify-content-center m-1" *ngIf="loading" [style]="{width: '24px', height: '24px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+    <div >
+      <ul class="list"   >
+        <p-scrollPanel [style]="{width: '100%', height: '400px'}" styleClass="custombar1">
+        <li class="clearfix pointer" *ngFor="let lista of lista_usuarios  | filter:searchText"  (click)="loadChat(lista)" >
+          
+        
+       
+          <div class="about" (click)="loadChat(lista)" >
+         
+            <div class="name"(click)="loadChat(lista)" > 
+                <i class="fas fa-users fa-2x mr-2"  *ngIf="lista.grupo_nombre !== 'LISTADO'" width="32px" height="32px" alt="avatar"></i>
+                <i class="fas fa-user-circle fa-2x mr-2"  *ngIf="lista.grupo_nombre === 'LISTADO'" width="32px" height="32px" alt="avatar"></i>
+              {{lista.nombreyapellido}}
+            </div>
+            
+            <div class="status" (click)="loadChat(lista)" >
+              <i class="fa fa-circle online" *ngIf="lista.estado === 'NUEVO'"></i>
+              <i class="fa fa-circle offline" *ngIf="lista.estado === 'LEIDO'"></i>
+               <label>{{lista.estado | titlecase}}</label>
+               <label class="ml-1 text-info label-size-sm">{{lista.fecha_modificacion | date :'EEEE dd'}}  </label>
+               <label class="ml-1 text-info label-size-sm">{{lista.fecha_modificacion | date : 'h:mm:ss a'}}  </label>
+            </div>
+          </div>
+        </li>
+      </p-scrollPanel>
+       
+      </ul>
+    </div>
+   
+  </div>
+  
+  <div class="chat">
+  
+    <div class="chat-header clearfix" *ngIf="selected_usuario">
+     <!--  <img *ngIf="selected_usuario" src="../../../assets/icons/user-image-default.png" width="32px" height="32px" alt="avatar" /> -->
+    
+      <div class="chat-about row ">
+        <i  class="fas fa-users fa-2x mr-2 text-secondary my-hover"  *ngIf="selected_usuario.grupo_nombre !== 'LISTADO'" width="32px" height="32px" alt="avatar" (click) = 'verUsuarios($event,op)'></i>
+        <i  class="fas fa-user-circle fa-2x mr-2 text-secondary"  *ngIf="selected_usuario.grupo_nombre === 'LISTADO'" width="32px" height="32px" alt="avatar"></i>
+        <div class="chat-with" *ngIf="selected_usuario"><label class="text-secondary">{{selected_usuario.nombreyapellido}}</label>
+        </div>
+      
+        
+        </div>   
+        <div class="d-flex justify-content-end">
+          <label class="mr-2 ml-2 mt-2 float:right text-secondary">Ver historia completa</label>
+        <p-inputSwitch class="mt-2" (onChange)="loadChat(this.usuarioChat)" [(ngModel)]="limite_historia"></p-inputSwitch>
+        </div>
+        <div class="row"  *ngIf="loading_chat">
+          <p-progressSpinner class="d-flex justify-content-center ml-3 mr-1" [style]="{width: '24px', height: '24px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>    
+          <label class="texto-josefina mt-2 text-info">{{loadDetalle}}</label> 
+        </div>
+      
+        <p-overlayPanel #op appendTo="body" [showTransitionOptions]="'400ms'" [hideTransitionOptions]="'300ms'"  [dismissable]="true" >   
+          
+
+          <p-orderList [value]="detalleUsuarios" [listStyle]="{'height':'auto'}" metaKeySelection="false" filterBy="nombreyapellido" filterPlaceholder="Filtrar por nombre" dragdrop="false">
+            <ng-template let-usuarios pTemplate="item">
+                <div class="usuarios-item">                  
+                    <div class="product-list-detail">
+                      <span class="bold">{{usuarios.nombreyapellido}}</span>
+                      
+                   
+                    </div>
+                    <div class="product-list-detail">
+                      <span class="text-info">{{usuarios.estado}}</span>
+                    </div>
+                    <div class="product-list-detail">
+                      <span class="text-success text-small">{{usuarios.fecha_lectura  | date: 'EEEE dd/MM/yyyy HH:mm:ss'}}</span>
+                    </div>
+                </div>
+            </ng-template>
+        </p-orderList>
+        </p-overlayPanel>  
+    </div> <!-- end chat-header -->
+    <div class="chat-history" #scrollMe style="overflow: scroll; height: xyz;">
+      <div  > 
+        <!--   <p-scrollPanel [style]="{width: '100%', height: '90%'}" styleClass="custombar1"> -->
+          <ul>
+           
+              <li class="clearfix" *ngFor="let chat of lista_chat ">
+                <div  [ngClass]="origenMensajeUsuario(chat.usuario_id)">
+                 
+                  <span class="message-data-name text-secondary" >{{chat.nombreyapellido}}</span>&nbsp; &nbsp; <i class="fa fa-circle me"></i>
+                  <span class="message-data-time" > <label class="mr-1 label-size-sm">{{chat.fecha_creacion | date :'EEEE dd MMM'}} </label><label class="label-size-sm">{{chat.fecha_creacion | date :'h:mm:ss a'}}</label> </span>    
+                </div>
+                <div  [ngClass]="origenMensaje(chat.usuario_id)">
+                  <a *ngIf="chat.es_adjunto === 'SI'" class="pointer" href="{{url}}{{chat.archivo}}" target="_blank"><i class="fas fa-cloud-download-alt fa-lg"></i>  {{chat.mensaje}}</a>
+                 <p *ngIf="chat.es_adjunto !== 'SI'" >{{chat.mensaje}}</p>               
+                </div>
+              </li>
+         
+         
+            
+          </ul>
+       <!--  </p-scrollPanel> -->
+        </div> <!-- end chat-history -->
+    </div>
+
+    
+    <div class="chat-message ">
+      
+      <textarea [disabled]="habilitarTexto" [(ngModel)]="textoAenviar" rows="5" cols="30" placeholder ="Escriba su mensaje"  pInputTextarea (keyup.enter)="enviarTexto()"></textarea>     
+      <i class="fas fa-paperclip fa-2x icon-color-green pointer" (click)="asociarArchivo()"></i> &nbsp;&nbsp;&nbsp;
+      
+      <button (click)="enviarTexto()">Enviar</button>
+
+    </div> <!-- end chat-message -->
+    
+  </div> <!-- end chat -->
+  
+</div> <!-- end container -->
+
+

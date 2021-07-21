@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-8">
+
+<form   [formGroup]="updateDataForm" >
+  <div class="row">
+      <div class="col-12">
+
+        <div class="form-group  ">
+          <div class="row ml-1"> <h6  >Insumo : {{this.config.data['insumo_descripcion'] }}</h6>
+            <h6 class="ml-3" >EXISTENCIA : {{this.config.data['cantidad_existente'] }}</h6></div>
+         
+        </div>
+          <div class="form-group ">
+            
+                  <label  >Cirugía numero</label>
+                  <input class="form-control col-md-12 form-control-sm" formControlName="cirugia_id"  autofocus  />
+                  <div *ngIf="updateDataForm.controls.cirugia_id.errors?.required && updateDataForm.controls.cirugia_id.touched" class="error">
+                          * Este campo es requerido
+                  </div>
+          </div>
+         
+          <div class="form-group">
+              <div >
+              <label  >Fecha de matriculación</label>
+            </div>                               
+              <p-calendar formControlName="fecha_ingreso" [locale]="es" dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" yearRange="2015:2100" ></p-calendar>
+              <div *ngIf="updateDataForm.controls.fecha_ingreso.errors?.required && updateDataForm.controls.fecha_ingreso.touched" class="error">
+                  * Este campo es requerido
+              </div>
+        </div>
+        <div class="form-group">
+          <label  >Usado</label>
+          <input type="number" class="form-control col-md-12 form-control-sm" formControlName="cantidad_usada"    />
+          <div *ngIf="updateDataForm.controls.cantidad_usada.errors?.required && updateDataForm.controls.cantidad_usada.touched" class="error">
+                          * Este campo es requerido
+          </div>
+      </div>
+     
+  </div>
+  </div>
+</form>
+
+</div>
+</div>
+<p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+              <button  [disabled]="!updateDataForm.valid" [formGroup]="updateDataForm" class="btn btn-primary" type="submit" (click)="guardarDatos()" >Guardar</button>
+              
+      </div>
+  </p-footer>

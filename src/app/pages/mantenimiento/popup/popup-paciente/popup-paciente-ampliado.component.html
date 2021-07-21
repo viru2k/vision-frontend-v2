@@ -1,0 +1,55 @@
+
+  
+  <div class="row col-md-auto justify-content-md-center animated fadeIn slow" >
+<div class="row">
+    <form action="busquedaForm">
+    <div class="col-2">
+            <label>Buscar por</label>
+    </div>
+    <div class="col-2">
+            <div class="col-3"><p-radioButton name="w" formControlName="consulta"   value="paciente.apellido" label="Apellido"  inputId="optw1"></p-radioButton></div>
+            <div class="col-3"><p-radioButton name="w"  formControlName="consulta"   value="paciente.dni" label="Dni"  inputId="optw2"></p-radioButton></div>
+            <div class="col-3"><p-radioButton name="w"  formControlName="consulta"   value="obra_social.nombre" label="Obra Social"  inputId="optw3"></p-radioButton></div>
+    </div>
+    <div class="col-8">
+            <button   class="btn btn-primary" type="submit" (click)="buscar()" >Guardar</button>
+    </div>
+</form>
+</div>
+    <p-table #dt [columns]="cols"  [value]="elementos" selectionMode="single" [resizableColumns]="true"
+    [(selection)]="selectedItem" (onRowSelect)="onRowSelect($event)" [scrollable]="true" scrollHeight="400px" >
+
+    <ng-template class="pt-2" pTemplate="header" let-columns >
+
+            <tr>
+                <th  *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn >
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order" ></p-sortIcon>
+                </th>
+                
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field" >
+                    <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'apellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" autofocus>
+                    <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'dni'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                    <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'fecha_nacimiento'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                    <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'domicilio'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                    <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'telefono_cel'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                </th>
+              
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-elementos>
+                    <tr [pSelectableRow]="elementos" >
+                      <td>{{elementos.apellido}}</td>
+                      <td>{{elementos.nombre}}</td>
+                      <td>{{elementos.dni}}</td>
+                      <td>{{elementos.fecha_nacimiento | date: 'dd/MM/yyyy'}}</td>
+                      <td>{{elementos.domicilio}}</td>
+                      <td>{{elementos.telefono_cel}}</td>                                          
+                    </tr>
+        </ng-template> 
+    </p-table>
+    </div>

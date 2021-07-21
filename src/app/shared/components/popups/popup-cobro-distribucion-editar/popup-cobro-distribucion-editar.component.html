@@ -1,0 +1,48 @@
+<p-table  #dt class="pt-2"  tableStyleClass="prime-table" selectionMode="single" [columns]="cols" [value]="elementos"   columnResizeMode="expand" [responsive]="true"
+scrollHeight="400px" [scrollable]="true"   >
+
+           <ng-template pTemplate="header" let-columns >
+          
+                      <tr >
+                           
+                        <th  *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                        </th>                        
+                    </tr> 
+                    <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field"  >
+
+                          <input style=" font-size: 12px;"  class="form-control col-md-12 form-control-sm" *ngSwitchCase="'apellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'codigo'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'descripcion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'obra_social_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'obra_social_practica_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'distribucion_porcentaje'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                      
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'distribucion_valor'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                                                                                                                                                                                                                                      
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'distribucion_total'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                                                                                                                                                                                                                                      
+                          
+                      </th>
+                  </tr>
+              </ng-template>
+            
+      <ng-template pTemplate="body" let-elementos  >
+          <tr style="height:28px" >     
+                  <td style="font-size: 11px;width: 15%">{{elementos.apellido}}</td>
+                  <td style="font-size: 11px;width: 10%">{{elementos.nombre}}</td>
+                  <td style="font-size: 11px;width: 8%">{{elementos.codigo}}</td>
+                  <td style="font-size: 11px;width: 15%">{{elementos.descripcion}}</td>
+                  <td style="font-size: 11px;width: 15%">{{elementos.obra_social_nombre}}</td>                                                    
+                  <td style="font-size: 11px;width: 15%">{{elementos.obra_social_practica_nombre}}</td>   
+                  <td style="font-size: 11px;width: 8%">{{elementos.distribucion_porcentaje}}</td>                            
+                  <td style="font-size: 11px;width: 8%">{{elementos.distribucion_valor |  number : '1.2-2'}}</td>  
+                  <td style="font-size: 11px;width: 8%">{{elementos.distribucion_total |  number : '1.2-2'}}</td>  
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+            <ul>
+             CATEGORIA MEDICO  : {{categorizacion}} ----TOTAL DISTRIBUCION : {{total_suma}} 
+            </ul>
+        </ng-template> 
+</p-table>

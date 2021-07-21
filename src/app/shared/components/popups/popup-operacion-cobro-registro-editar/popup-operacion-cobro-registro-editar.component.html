@@ -1,0 +1,165 @@
+
+            <form class="col-md-12"  [formGroup]="updateDataForm" >
+              <div class="row">
+                  <div class="col-md-6">
+
+                      <div class="form-group">
+                          <label  >Número de operación de cobro</label>
+                          <input class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_id"    />
+                         
+                  </div>
+                      <div class="form-group ">
+                          <div >
+                              <label  >Paciente</label>
+                            </div> 
+                          <div class=" input-group input-group-sm mb-3">
+                              <input (keyup.enter)="buscarPaciente()" placeholder="Buscar paciente" class="form-control col-md-12 form-control-sm" formControlName="nombreyapellido"   />                  
+                              <div class="input-group-append">
+                                <span class="input-group input-group-text form-control-sm">
+                                  <a  (click)="buscarPaciente()">
+                                      <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                  </a>
+                              </span>
+                              </div>
+                          </div>   
+                          <div class="mt-1">
+                            <button    class="btn btn-primary btn-sm"  (click)="editarPaciente()" >Editar datos de paciente</button>                        
+                          </div>                      
+                      </div>
+
+                      <div class="form-group ">
+                          <div >
+                              <label  >Médico</label>
+                            </div> 
+                          <div class=" input-group input-group-sm mb-3">
+                              <input (keyup.enter)="buscarMedico()" placeholder="Buscar médico" class="form-control col-md-12 form-control-sm" formControlName="medico_nombre"   />                  
+                              <div class="input-group-append">
+                                <span class="input-group input-group-text form-control-sm">
+                                  <a  (click)="buscarMedico()">
+                                      <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                  </a>
+                              </span>
+                              </div>
+                          </div>                       
+                      </div>
+
+                      <div class="form-group ">
+                          <div >
+                              <label  >Práctica</label>
+                            </div> 
+                          <div class=" input-group input-group-sm mb-3">
+                              <input (keyup.enter)="buscarPractica()" placeholder="Buscar practica" class="form-control col-md-12 form-control-sm" formControlName="descripcion"   />                  
+                              <div class="input-group-append">
+                                <span class="input-group input-group-text form-control-sm">
+                                  <a  (click)="buscarPractica()">
+                                      <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                  </a>
+                              </span>
+                              </div>
+                          </div> 
+                      </div>
+
+                      <div class="form-group ">
+                        <div >
+                            <label  >Obra Social / Coseguro</label>
+                          </div> 
+                          <div class=" input-group input-group-sm mb-3">
+                              <input  placeholder="Buscar practica" class="form-control col-md-12 form-control-sm" formControlName="obra_social_nombre"   />                  
+
+                          </div> 
+    
+                        </div> 
+                      <div class="form-group">
+                              <label  >Cantidad</label>
+                              <input class="form-control col-md-12 form-control-sm" formControlName="cantidad"    />
+                             
+                      </div>
+                      <div class="form-group">
+                          <label  >Valor original</label>
+                          <input   class="form-control col-md-12 form-control-sm" formControlName="valor_original"   />
+                      </div>
+                      <div class="form-group">
+                        <label  >Valor Facturado</label>
+                        <input class="form-control col-md-12 form-control-sm" formControlName="valor_facturado"   />
+                    </div>
+
+                    <div class="form-group">
+                      <label  >Categorización</label>
+                      <input class="form-control col-md-12 form-control-sm" formControlName="categorizacion"    />                     
+                     </div>
+                  </div>
+                 
+                  <div class="col-md-6">
+
+                                      
+
+                  
+
+                     <div class="form-group">
+                      <label  >Observación</label>
+                      <input class="form-control col-md-12 form-control-sm" formControlName="observacion"    />                     
+                     </div>
+                     <div class="form-group">
+                      <label  >Método de pago</label>
+                      <div><p-dropdown [options]="formasPago" formControlName="forma_pago" optionLabel="name" ></p-dropdown>   </div>
+                     </div>
+
+                     <div class="form-group">
+                      <label  >Presentanción número</label>
+                      <input class="form-control col-md-12 form-control-sm" formControlName="liquidacion_numero"    />                     
+                     </div>
+                     <div class="form-group ui-g-12">
+                      <label  >Observado</label>
+                      <div class="row">
+                        <div class="col-4"><p-radioButton name="groupname1" formControlName="tiene_observacion"   value="SI" label="SI"  inputId="opt12"></p-radioButton></div>
+                        <div class="col-4"><p-radioButton name="groupname1"  formControlName="tiene_observacion"   value="NO" label="NO"  inputId="opt22"></p-radioButton></div>
+                      </div>    
+                      <div class="form-group">
+                        <label  >Motivo de observación</label>
+                        <input class="form-control col-md-12 form-control-sm" formControlName="motivo_observacion"    />  
+                       </div>                   
+                  </div>
+                    <div class="form-group ui-g-12">
+                        <label  >Estado</label>
+                        <div class="row">
+                          <div class="col-3"><p-radioButton name="groupname" formControlName="estado_liquidacion"   value="PEN" label="PENDIENTE"  inputId="opt1"></p-radioButton></div>
+                          <div class="col-3"><p-radioButton name="groupname"  formControlName="estado_liquidacion"   value="AUD" label="AUDITADO"  inputId="opt2"></p-radioButton></div>
+                          <div class="col-3"><p-radioButton name="groupname"  formControlName="estado_liquidacion"   value="AFE" label="AFECTADO"  inputId="opt2"></p-radioButton></div>
+                          <div class="col-3"><p-radioButton name="groupname"  formControlName="estado_liquidacion"   value="DIS" label="DISTRIBUIDO"  inputId="opt2"></p-radioButton></div>
+                          
+                        </div>  
+                                            
+                    </div>
+                   
+                    <div class="form-group ui-g-12">
+                      <hr>
+                      <label class="text-danger"  >Anulado</label>
+                      <div class="row">
+                        <div class="col-4"><p-radioButton name="groupname12" class="text-danger" formControlName="es_anulado"   value="SI" label="SI"  inputId="opt12"></p-radioButton></div>
+                        <div class="col-4"><p-radioButton name="groupname22" class="text-danger" formControlName="es_anulado"   value="NO" label="NO"  inputId="opt22"></p-radioButton></div>
+                        
+                      </div>                       
+                  </div>
+
+                  <div class="form-group ui-g-12">
+                      <hr>
+                      <label class="text-danger"  >Prestación</label>
+                      <div class="row">
+                        <div class="col-4"><p-radioButton name="groupname12" class="text-danger" formControlName="internacion_tipo"   value="A" label="AMBULATORIO"  inputId="opt12"></p-radioButton></div>
+                        <div class="col-4"><p-radioButton name="groupname22" class="text-danger" formControlName="internacion_tipo"   value="I" label="INTERNACION"  inputId="opt22"></p-radioButton></div>
+                        
+                      </div>                       
+                  </div>
+                 </div>
+                 
+                    
+          </div>
+  
+          </form>
+          <p-footer>
+                  <div class="ui-dialog-buttonpane ui-helper-clearfix mt-2">
+                          <button    class="btn btn-primary btn-block" type="submit" (click)="actualizarDatos()" >Actualizar</button>                        
+                  </div>
+              </p-footer>
+     
+       

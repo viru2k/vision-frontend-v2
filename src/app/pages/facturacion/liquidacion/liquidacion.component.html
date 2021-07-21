@@ -1,0 +1,125 @@
+
+<div >
+  <app-loading *ngIf="loading"> </app-loading> 
+ 
+</div>
+
+<div>
+    <div class="row">
+      <div class="col-md-3">          
+        <div class="form-group row">
+            <label  class="col-sm-4 col-form-label">Obra social</label>
+            <div class="col-sm-8">
+              <input class="form-control col-md-12" placeholder="Obra social">
+              
+            </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">          
+          <div class="form-group row">
+              <label  class="col-sm-3 col-form-label">Médico</label>
+              <div class="col-sm-9">
+                <input class="form-control col-md-12" placeholder="Médico">
+                
+              </div>
+          </div>
+        </div>
+
+      <div class="col-md-2">
+        <div class="form-group row">
+            <label  class="col-sm-3 col-form-label">Desde</label>
+            <div class="col-sm-9">
+                <p-calendar inputStyleClass="form-control col-md-12"  placeholder="Fecha desde"  [locale]="es"  [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2100" ></p-calendar>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group row">
+            <label  class="col-sm-3 col-form-label">Hasta</label>
+            <div class="col-sm-9">
+                <p-calendar inputStyleClass="form-control col-md-12"  placeholder="Fecha desde"  [locale]="es"  [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2100" ></p-calendar>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-2 row justify-content-end">
+          <div class="form-group row">
+                  <button type="button" class="btn btn-info btn-md"  >Buscar ordenes</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+            <div class="col-md-3">
+                <div class="form-group row">
+                    <label  class="col-sm-4 col-form-label">Número:</label>
+                    <div class="col-sm-8">
+                        <p-spinner size="10" [(ngModel)]="valorLiquidacion"></p-spinner>
+                    </div>
+                </div> 
+            </div>
+            <div class="col-md-3">
+                <div class="form-group row">
+                        <div class="ui-g-12"><p-checkbox size="15" inputStyleClass="form-control col-md-12"  [(ngModel)]="checked" binary="true"  label="Todos los médicos"  ></p-checkbox></div>
+                </div>
+              </div>  
+            <div class="col-md-6 row justify-content-end"  >
+                <div class="form-group row" >
+                    <button type="button" class="btn btn-primary btn-md"  >Afectar liquidación</button>
+                </div>
+            </div>  
+      </div>
+
+
+
+      <div class="row animated fadeIn slow m-1" *ngIf="!loading">
+
+          <p-table #dt id="dataTable"  [columns]="cols" [autoLayout]="true" [value]="elementos" selectionMode="single" [resizableColumns]="true"
+            [scrollable]="true" scrollHeight="600px">
+          <ng-template pTemplate="header" let-columns >
+  
+                  <tr>
+                      <th  *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn >
+                          {{col.header}}
+                          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                      </th>
+                      <th></th>
+                  </tr>
+                  <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field" >
+                          <input class="form-control col-md-12" *ngSwitchCase="'apellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input class="form-control col-md-12" *ngSwitchCase="'nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input class="form-control col-md-12" *ngSwitchCase="'dni'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input class="form-control col-md-12" *ngSwitchCase="'fecha_nacimiento'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input class="form-control col-md-12" *ngSwitchCase="'domicilio'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input class="form-control col-md-12" *ngSwitchCase="'telefono_cel'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+  
+                      </th>
+                      <th style="width:4em"></th>
+                  </tr>
+              </ng-template>
+       
+              <ng-template pTemplate="body" let-elementos>
+                          <tr [pSelectableRow]="elementos" >
+                              <td>{{elementos.apellido}}</td>
+                              <td>{{elementos.nombre}}</td>
+                              <td>{{elementos.dni}}</td>
+                              <td>{{elementos.fecha_nacimiento | date: 'dd/MM/yyyy'}}</td>
+                              <td>{{elementos.domicilio}}</td>
+                              <td>{{elementos.telefono_cel}}</td>
+                              <!-- <div (click)="imprimirRenglon()"> <td>  <img  src="assets/icons/file-print.svg" alt="Imprimir" height="32" width="32"></td></div> -->
+                              <td  >
+                                          <button pButton icon="fas fa-file 2x" (click)="imprimirRenglon()"></button>
+                                      </td>
+                          </tr>
+                      </ng-template>
+            
+          
+          </p-table>
+
+
+
+</div>
+
+
+
+

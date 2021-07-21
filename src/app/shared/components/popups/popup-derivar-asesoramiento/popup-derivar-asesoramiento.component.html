@@ -1,0 +1,32 @@
+<div>
+  
+  <div class=" container-fluid"  >
+    <form [formGroup]="dataForm">
+        <div class="row">
+            <div class="col-12">
+        <div class="form-group ">
+            <label class=" form-control-label ">Motivo de derivación  </label>
+            <textarea class="form-control  form-control-sm" formControlName="motivo_derivacion" rows="5" cols="30" pInputTextarea autofocus></textarea>
+        </div>
+        <div class="form-group ">
+          <label class="text-info">Seleccione forma de pago : </label>
+           <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" class="mt-2 ml-2" [options]="TipoCirugia" formControlName="selectedcirugia"  defaultLabel="SELECCIONE CIRUGIAS" [panelStyle]="{minWidth:'12em'}" [filter]="true" filterBy="label,value.name"  >      </p-multiSelect>          
+          
+        </div>
+        
+        <label class="text-danger"  >Ojo</label>
+        <div class="row">
+          <div class="col-4"><p-radioButton name="groupname22"  formControlName="ojo"   value="OI" label="Ojo izquierdo"  inputId="opt12"></p-radioButton></div>
+          <div class="col-4"><p-radioButton name="groupname22"  formControlName="ojo"   value="OD" label="Ojo derecho"  inputId="opt22"></p-radioButton></div>
+          <div class="col-4"><p-radioButton name="groupname22"  formControlName="ojo"   value="AO" label="Ambos ojos"  inputId="opt23"></p-radioButton></div>
+        </div>  
+       
+           
+      
+          <button    class=" mt-2 btn  btn-success btn-md float-right " (click)="derivar()" > Derivar</button>         
+        </div>
+      </div>
+  </form>
+  </div>
+
+</div>

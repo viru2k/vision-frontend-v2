@@ -1,0 +1,240 @@
+
+<div >
+    <app-loading *ngIf="loadingAccion"> </app-loading>
+</div>
+
+<div>
+  <div class="row m-1 mt-3">
+
+
+      <div class=" col-md-6 col-sm-12">
+
+
+              <h6 class="card-header mb-3">Buscar paciente</h6>
+
+
+
+            <div class="  mb-3">
+                <div class="">
+                  <form [formGroup]="formPaciente">
+                        <div class="row ml-2 mb-2">
+                                <h6  class="mr-2 mb-2" >Documento :</h6>
+                                <h6>{{formPaciente.value.dni}}</h6>
+                        </div>
+                        <div class="row ml-2 mb-2">
+                                <h6  class="mr-2 mb-2">Apellido y nombre : </h6>
+                                <h6  class="mr-2 mb-2">{{formPaciente.value.apellido}}</h6> <h6>{{formPaciente.value.nombre}}</h6>
+                        </div>
+                        <div class="row ml-2 mb-2">
+                                <h6  class="mr-2 mb-2 texto-monserrat-alternat">Nacimiento :</h6>
+                                <h6  class="mr-2 mb-2">{{formPaciente.value.fecha_nacimiento | date: 'dd/MM/yyyy'}}</h6>
+                        </div>
+                        <div class="row ml-2 mb-2">
+                                <h6  class="mr-2 mb-2">Obra social :</h6>
+                                <h6>{{formPaciente.value.obra_social_nombre}}</h6>
+                        </div>
+                        <div class="row ml-2 mb-2 d-flex align-items-center">
+                          <h6  class="mr-2 mb-2">Obra social adicional :</h6>
+                          <h6>{{formPaciente.value.obra_social_nombre_adicional}}</h6>
+                         </div>
+                         <div *ngIf="formPaciente.value.obra_social_nombre_adicional" class="row ml-2 mb-2 d-flex align-items-center">
+                           <button class="btn btn-sm btn-info btn-block" (click)="buscarObraSocial()"> Buscar obra social adicional</button></div>
+                    </form>
+
+                </div>
+                <div class="d-flex justify-content-center">
+                </div>
+                <div></div>
+        </div>
+        <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex justify-content-start">
+
+            </div>
+            <div class="d-flex justify-content-center">
+
+            </div>
+            <div></div>
+    </div>
+
+
+
+
+
+
+          <p-footer>
+              <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-start">
+                            <div class=" d-flex justify-content-start pr-2">  <button    class="btn btn-info  btn-sm " type="submit" (click)="nuevoPaciente()" >Crear paciente</button></div>
+                            <div class="d-flex justify-content-end ">   <button    class="btn btn-success  btn-sm " type="submit" (click)="editarPaciente()" >Editar paciente</button></div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary btn-sm btn-round" type="button" (click)="buscarPaciente()" pInputText pTooltip="Buscar datos del paciente" placeholder="Right" tooltipEvent="hover">
+                                    <i class="fas fa-search"></i> Buscar paciente
+                                </button>
+                    </div>
+              </div>
+          </p-footer>
+
+
+          <form [formGroup]="AgendaForm " class="mt-3">
+            <h6 class="card-header mb-3">Buscar médico</h6>
+
+
+
+
+       <div class="form-group ">
+           <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                        <h6  class="mr-2">MEDICO :</h6>
+                        <h6>{{medico_nombre}}</h6>
+                       </div>
+                      <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary btn-sm btn-round" type="button" (click)="buscarUsuarioObraSocial()" pInputText pTooltip="Buscar datos del médico" placeholder="Right" tooltipEvent="hover">
+                           <i class="fas fa-search"></i> Buscar médico
+                        </button>
+                     </div>
+           </div>
+           <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                        <h6  class="mr-2">MEDICO FACTURA :</h6>
+                        <h6>{{medico_nombre_factura}}</h6>
+                       </div>
+                      <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary btn-sm btn-round" type="button" (click)="buscarUsuarioObraSocialFactura()" pInputText pTooltip="Buscar datos del médico" placeholder="Right" tooltipEvent="hover">
+                           <i class="fas fa-search"></i> Buscar médico para facturar
+                        </button>
+                     </div>
+           </div>
+       </div>
+
+
+        </form>
+
+     <!--
+         <hr>    <h6  >Información adicional al turno</h6>
+        <div class="row col-6">
+                        <button    class="btn btn-lg btn-danger btn-md float-right mr-2" (click)="AgregarMotivosAtencion()"> Agregar motivos de atención </button>
+                </div>
+    -->
+
+      </div>
+
+
+      <div class="col-md-6 col-sm-12 ">
+        <h6 class="card-header mb-3">Buscar turno</h6>
+
+        <!-- [ngStyle]="{backgroundColor: (date.day < 21 && date.day > 10) ? '#81C784' : 'inherit'}" -->
+
+        <div class="justify-content-between mb-2" >
+            <div  class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start" *ngIf="!!medico_nombre && !!this.usuario_id && !! this.formPaciente.value.obra_social_nombre_adicional_id">
+                    <form  [formGroup]="DateForm">
+                    <p-calendar formControlName="fechaHoy"   (onSelect)="actualizarFecha($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy "  [disabledDates]="invalidDates" [readonlyInput]="true">
+                        <ng-template pTemplate="date" let-date>
+                            <span  [ngClass]="colorRow(date)"  style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                        </ng-template>
+                  </p-calendar>
+                </form>
+                </div>
+                <div class="d-flex justify-content-end">
+                        <button    class="btn btn-link btn-warning btn-lg " (click)="loadSobreTurno()" >Sobre turno</button>
+                        <button    class="btn btn-link btn-danger   btn-lg" (click)="loadTurnoTodos()" >Turnos para ugencias</button>
+                </div>
+            </div>
+            <div class="mt-2">
+                    <h6 class="card-header mb-3">Motivo del turno</h6>
+            </div>
+
+
+
+            <div class="col-md-12 col-sm-12">
+                    <label>Motivo</label>
+                    <div>
+                        <textarea [rows]="1" [cols]="30" pInputTextarea class="mt-1 mb-4 form-control form-control-sm "[(ngModel)]="observacion"></textarea>
+                    </div>
+                    <div class="row container-fluid" >
+                    <div >
+                        <label class="texto-monserrat  mr-1">Estudios</label>
+                        <p-dropdown class="mt-1 mb-2 " [options]="estudios" [(ngModel)]="selectedEstudio" optionLabel="name" ></p-dropdown>
+                    </div>
+                    <div class=" row  container-fluid  ">
+                        <label class="texto-monserrat mt-2 mr-1 ">Médico solicitante</label>
+                        <p-dropdown class="mt-1 mb-2  " [options]="usuarios" [(ngModel)]="selectedMedicoEfector" optionLabel="nombreyapellido" ></p-dropdown>
+                    </div>
+                    <div class="row  container-fluid mt-2 mr-2" >
+                        <div>
+                                <label class="mr-1">Motivo del turno</label>
+                                <p-dropdown class="mt-1 mb-2 mt-1" [options]="motivos" [(ngModel)]="selectedMotivo" optionLabel="name" ></p-dropdown>
+
+                            </div>
+
+
+                    </div>
+
+                  </div>
+
+
+
+                  </div>
+
+
+
+
+        </div>
+
+
+        <div>
+        <h6 class="texto-monserrat card-header">Turnos disponibles</h6>
+
+
+<div >
+    <p-table  #dt  tableStyleClass="prime-table" class="pt-2" [columns]="colsAgenda" [value]="agendaTurno"    columnResizeMode="expand" [scrollable]="true" scrollHeight="250px" [loading]="loading" loadingIcon="fas fa-spinner fa-2x icon-color-green">
+
+      <ng-template pTemplate="header" let-columns >
+
+              <tr>
+                  <th  *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn >
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                  </th>
+
+              </tr>
+              <tr>
+              <th *ngFor="let col of columns" [ngSwitch]="col.field" >
+                  <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'dia_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                 <!-- <p-dropdown *ngSwitchCase="'dia_nombre'" [options]="dia" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown> -->
+                  <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'hora_desde'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                  <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'nombreyapellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                  <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'boton'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+              </th>
+
+          </tr>
+      </ng-template>
+
+  <ng-template pTemplate="body" let-agendaTurno>
+  <tr [pSelectableRow]="elementos" >
+          <td>{{agendaTurno.dia_nombre}}</td>
+          <td>{{agendaTurno.hora_desde}}</td>
+          <td>{{agendaTurno.nombreyapellido}}</td>
+          <td>
+             <!--    <button type="button" class="btn btn-success btn-sm" (click)="generarTurno(agendaTurno)"  [disabled]="agendaTurno.nombreyapellido == 'HERNANDEZ JUAN MARCOS'"   >Agendar</button> -->
+              <button type="button" class=" btn btn-info  btn-sm" (click)="generarTurno(agendaTurno)"    >Agendar</button>
+          </td>
+  </tr>
+  </ng-template>
+  </p-table>
+
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+

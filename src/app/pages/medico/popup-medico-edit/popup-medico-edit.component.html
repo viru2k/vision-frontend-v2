@@ -1,0 +1,164 @@
+     
+            <div class="row">
+              <div class="col-8">
+            <form   [formGroup]="updateDataForm" >
+              <div class="row">
+                  <div class="col-6">
+                      <div class="form-group ">
+                              <label  >Apellido</label>
+                              <input class="form-control col-md-12 form-control-sm" formControlName="apellido"  autofocus  />
+                              <div *ngIf="updateDataForm.controls.apellido.errors?.required && updateDataForm.controls.apellido.touched" class="error">
+                                      * Este campo es requerido
+                              </div>
+                      </div>
+                      <div class="form-group">
+                              <label  >Nombre</label>
+                              <input class="form-control col-md-12 form-control-sm" formControlName="nombre"   />
+                              <div *ngIf="updateDataForm.controls.nombre.errors?.required && updateDataForm.controls.nombre.touched" class="error">
+                                              * Este campo es requerido
+                              </div>
+                      </div>                   
+            
+                   
+                     
+                      <div class="form-group">
+                          <div >
+                          <label  >Fecha de matriculación</label>
+                        </div>                               
+                          <p-calendar formControlName="fecha_matricula" [locale]="es" dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2100" ></p-calendar>
+                          <div *ngIf="updateDataForm.controls.fecha_matricula.errors?.required && updateDataForm.controls.fecha_matricula.touched" class="error">
+                              * Este campo es requerido
+                          </div>
+                    </div>
+                    <div class="form-group">
+                      <label  >Cuit</label>
+                      <input class="form-control col-md-12 form-control-sm" formControlName="cuit"    />
+                      <div *ngIf="updateDataForm.controls.cuit.errors?.required && updateDataForm.controls.cuit.touched" class="error">
+                                      * Este campo es requerido
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label  >Ing. brutos</label>
+                    <input class="form-control col-md-12 form-control-sm" formControlName="ing_brutos"    />
+                    <div *ngIf="updateDataForm.controls.ing_brutos.errors?.required && updateDataForm.controls.ing_brutos.touched" class="error">
+                                    * Este campo es requerido
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <label  >Fecha alta</label>
+                  <p-calendar formControlName="fecha_alta_afip" [locale]="es" dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2100" ></p-calendar>
+                  <div *ngIf="updateDataForm.controls.fecha_alta_afip.errors?.required && updateDataForm.controls.fecha_alta_afip.touched" class="error">
+                      * Este campo es requerido
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-6">
+
+                           <div class="form-group">
+                               <label >Domicilio</label>
+                               <input class="form-control col-md-12 form-control-sm" formControlName="domicilio"    />
+                               <div *ngIf="updateDataForm.controls.domicilio.errors?.required && updateDataForm.controls.domicilio.touched" class="error">
+                                               * Este campo es requerido
+                               </div>
+                         </div>
+
+                      <div class="form-group ">
+                        <div >
+                          </div> 
+                        <div class=" input-group input-group-sm mb-3">
+                             <button (click)="agregarObraSocial()"  class="btn btn-success btn-sm"> Asociar obras sociales</button>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                      <label  >E-mail</label>
+                      <input class="form-control col-md-12 form-control-sm" formControlName="email"    />
+                      <div *ngIf="updateDataForm.controls.email.errors?.required && updateDataForm.controls.email.touched" class="error">
+                                      * Este campo es requerido
+                      </div>
+                   </div>
+
+               <!--     <div class="form-group">
+                     <label  >E-mail laboral</label>
+                     <input class="form-control col-md-12 form-control-sm" formControlName="email_laboral"    />
+                     <div *ngIf="updateDataForm.controls.email_laboral.errors?.required && updateDataForm.controls.email_laboral.touched" class="error">
+                                     * Este campo es requerido
+                     </div>
+                  </div> -->
+               
+
+             <div class="form-group">
+                 <label  >Telefono celular</label>
+                 <input class="form-control col-md-12 form-control-sm" formControlName="telefono_cel"    />
+                 <div *ngIf="updateDataForm.controls.telefono_cel.errors?.required && updateDataForm.controls.telefono_cel.touched" class="error">
+                                 * Este campo es requerido
+                 </div>
+             </div>
+    <!--          <div class="form-group">
+                <label  >Telefono fijo</label>
+                <input class="form-control col-md-12 form-control-sm" formControlName="telefono"    />
+                <div *ngIf="updateDataForm.controls.telefono.errors?.required && updateDataForm.controls.telefono.touched" class="error">
+                                * Este campo es requerido
+                </div>
+                </div> -->
+                <div class="form-group">
+                  <label  >Factura Key</label>
+                  <input class="form-control col-md-12 form-control-sm" formControlName="factura_key"    />
+                  <div *ngIf="updateDataForm.controls.factura_key.errors?.required && updateDataForm.controls.factura_key.touched" class="error">
+                                  * Este campo es requerido
+                  </div>
+              </div>
+            
+              <div class="form-group">
+                <label  >Factura certificado</label>
+                <input class="form-control col-md-12 form-control-sm" formControlName="factura_crt"    />
+                <div *ngIf="updateDataForm.controls.factura_crt.errors?.required && updateDataForm.controls.factura_crt.touched" class="error">
+                                * Este campo es requerido
+                </div>
+            </div>
+        </div>
+
+            
+
+    
+      </div>
+           
+          </form>
+
+        </div>
+          <div class="col-4">
+
+         
+            <div class="form-group">
+              <label  class="mr-2 ">Punto de venta</label>
+      <p-dropdown class="col-1" [options]="elementosPtoVta" [(ngModel)]="elementoPtoVta" (onHide)="obtenerPuntoVta($event)" optionLabel="punto_vta" placeholder="Pto venta"></p-dropdown>
+            
+          </div>
+  
+          <div class="form-group">
+            <label class="mr-2 " >Condición frente al IVA</label>
+            <p-dropdown class="mr-2 "  [options]="elementosCondicionIva" [(ngModel)]="elementoCondicionIva"  (onHide)="obtenerCondicionIva($event)" optionLabel="categoria_iva" placeholder="Condición"></p-dropdown>
+           
+        </div>
+        <div class="form-group">
+          <label class="mr-2 " >Tipo de documento</label>
+          <p-dropdown class="mr-2 "  [options]="elementosDocumento" [(ngModel)]="elementoDocumento" (onHide)="obtenerTipoDocumento($event)" optionLabel="descripcion" placeholder="Documento"></p-dropdown>
+        
+      </div>
+  
+      <div class="form-group">
+        <label class="mr-2 " >Comprobante</label>
+        <p-dropdown class="mr-2 "  [options]="elementosComprobante" [(ngModel)]="elementoComprobante"  (onHide)="obtenerComprobante($event)" optionLabel="descripcion" placeholder="Letra"></p-dropdown>
+      
+    </div>
+          </div>
+        </div>
+        
+          <p-footer>
+                  <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                          <button  [disabled]="!updateDataForm.valid" [formGroup]="updateDataForm" class="btn btn-primary" type="submit" (click)="guardarDatos()" >Guardar</button>
+                          
+                  </div>
+              </p-footer>
+     

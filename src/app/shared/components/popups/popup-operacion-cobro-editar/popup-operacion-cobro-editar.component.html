@@ -1,0 +1,116 @@
+
+            <form class="col-md-12"  [formGroup]="updateDataForm" >
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group ">
+                          <div >
+                              <label  >Paciente</label>
+                            </div>
+                          <div class=" input-group input-group-sm mb-3">
+                              <input (keyup.enter)="buscarPaciente()" placeholder="Buscar paciente" class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_paciente_nombre"   />
+                              <div class="input-group-append">
+                                <span class="input-group input-group-text form-control-sm">
+                                  <a  (click)="buscarPaciente()">
+                                      <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                  </a>
+                              </span>
+                              </div>
+
+
+                          </div>
+                          <div class="mt-1">
+                            <button    class="btn btn-primary btn-sm"  (click)="editarPaciente()" >Editar datos de paciente</button>
+                          </div>
+                      </div>
+
+
+
+
+
+                      <div class="form-group">
+                          <label  >Total real</label>
+                          <input   class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_total_operacion_cobro"   />
+                      </div>
+
+                      <div class="form-group">
+                        <label  >Total facturado</label>
+                        <input class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_total_facturado"    />
+
+                </div>
+                      <div class="form-group">
+                        <label  >Total coseguro</label>
+                        <input class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_total_coseguro"   />
+                    </div>
+                    <div class="form-group">
+                      <label  >Total honorarios</label>
+                      <input class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_total_honorarios_medicos"   />
+                  </div>
+
+                  <div class="form-group">
+                    <label  >Total otros</label>
+                    <input class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_total_otros"   />
+                </div>
+                  </div>
+
+                  <div class="col-md-6">
+
+
+
+                            <div class="form-group ">
+                                <div >
+                                    <label  >Obra Social</label>
+                                  </div>
+                                <div class=" input-group input-group-sm mb-3">
+                                    <input (keyup.enter)="buscarObraSocial()" placeholder="Buscar paciente" class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_obra_social_nombre"   />
+                                    <div class="input-group-append">
+                                      <span class="input-group input-group-text form-control-sm">
+                                        <a  (click)="buscarObraSocial()">
+                                            <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                        </a>
+                                    </span>
+                                    </div>
+                                </div>
+
+
+                          </div>
+                          <div class="form-group">
+                              <div >
+                              <label  >Fecha de cobro</label>
+                            </div>
+
+                              <p-calendar formControlName="operacion_cobro_fecha_cobro" [showTime]="true"  (onSelect)="actualizarFecha($event)" tabindex="0"   [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true"></p-calendar>
+                      </div>
+                      <div class="form-group">
+                          <label  >Número de bono</label>
+                          <input   class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_numero_bono"   />
+                      </div>
+                      <div class="form-group">
+                          <label  >Observación</label>
+                          <input   class="form-control col-md-12 form-control-sm" formControlName="operacion_cobro_observacion"   />
+                      </div>
+
+
+                      <div class="form-group ui-g-12">
+
+                          <label class="text-danger"  >Anulado</label>
+                          <div class="row">
+                            <div class="col-4"><p-radioButton name="groupname22" class="text-danger" formControlName="operacion_cobro_es_anulado"   value="SI" label="SI"  inputId="opt12"></p-radioButton></div>
+                            <div class="col-4"><p-radioButton name="groupname22" class="text-danger" formControlName="operacion_cobro_es_anulado"   value="NO" label="NO"  inputId="opt22"></p-radioButton></div>
+
+                          </div>
+                      </div>
+
+
+
+                 </div>
+
+
+          </div>
+
+          </form>
+          <p-footer>
+                  <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                          <button    class="btn btn-primary" type="submit" (click)="actualizarDatos()" >Actualizar</button>
+                  </div>
+              </p-footer>
+

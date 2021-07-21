@@ -1,0 +1,119 @@
+<div >
+ 
+    <div class="row">
+        <div class=" col-2 mt-1"> <label class="mr-2">Médico opera : </label></div>
+      <div class=" col-6">
+          <p-autoComplete  [suggestions]="filteredItemsOpera" forceSelection="true" (completeMethod)="filterItemsOpera($event)" [size]="35" autofocus
+            [minLength]="1" placeholder="Escriba para filtrar" [dropdown]="true"  [style]="{'width':'350px'}" (onSelect)="seleccionadoOpera($event)"
+            field="nombre" >     
+          </p-autoComplete>
+      </div>
+      <div class=" col-2">
+        <div class="input-group input-group-sm mb-2">
+            <input type="number" (change)="calcularPorcentaje()" class="form-control" [(ngModel)]="medicoOperaPorcentaje" placeholder="Porcentaje" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">%</span>
+            </div>
+          </div>
+      </div>
+
+      <div class=" col-2">
+        <div class="input-group input-group-sm mb-3">
+          <input type="number"  class="form-control" [(ngModel)]="medicoOperaDistribucion " placeholder="Distribución" aria-label="Recipient's username" aria-describedby="inputGroup-sizing-sm">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm">$</span>
+          </div>
+      </div>
+      </div>
+      <div class=" col-2 mt-1"> <label class="mr-2">Médico ayuda : </label></div>
+      <div class=" col-6">
+          <p-autoComplete  [suggestions]="filteredItemsAyuda" forceSelection="true" (completeMethod)="filterItemsAyuda($event)" [size]="35"
+            [minLength]="1" placeholder="Escriba para filtrar" [dropdown]="true"  [style]="{'width':'350px'}" (onSelect)="seleccionadoAyuda($event)"
+            field="nombre" >     
+          </p-autoComplete>
+      </div>
+
+      
+      <div class=" col-2">
+        <div class="input-group input-group-sm mb-2">
+            <input type="text" (change)="calcularPorcentaje()" class="form-control" [(ngModel)]="medicoAyudaPorcentaje" placeholder="Porcentaje" aria-label="Recipient's username" ria-describedby="inputGroup-sizing-sm">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">%</span>
+            </div>
+          </div>
+      </div>
+
+      <div class=" col-2">
+          <div class="input-group input-group-sm mb-3">
+          <input type="text" class="form-control" [(ngModel)]="medicoAyudaDistribucion" placeholder="Distribución" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <span class="input-group-text"  id="inputGroup-sizing-sm">$</span>
+          </div>
+        </div>
+      </div>
+      <div class=" col-2 mt-1"> <label class="mr-2">Médico ayuda 2 : </label></div>
+      <div class=" col-6">
+          <p-autoComplete  [suggestions]="filteredItemsAyuda2" forceSelection="true" (completeMethod)="filterItemsAyuda2($event)" [size]="35"
+            [minLength]="1" placeholder="Escriba para filtrar" [dropdown]="true"  [style]="{'width':'350px'}" (onSelect)="seleccionadoAyuda2($event)"
+            field="nombre" >     
+          </p-autoComplete>
+      </div>
+      <div class=" col-2">
+        <div class="input-group input-group-sm mb-2">
+            <input type="text" (change)="calcularPorcentaje()" class="form-control" [(ngModel)]="medicoAyuda2Porcentaje" placeholder="Porcentaje" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">%</span>
+            </div>
+          </div>
+      </div>
+
+      <div class=" col-2">
+          <div class="input-group input-group-sm mb-3">
+          <input type="text" class="form-control" [(ngModel)]="medicoAyuda2Distribucion" placeholder="Distribución" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">$</span>
+          </div>
+        </div>
+      </div>
+      <div class=" col-2 mt-1">          <label class="mr-2">Clínica : </label></div>
+      <div class=" col-6">
+          <p-autoComplete  [suggestions]="filteredItemsClinica" forceSelection="true" (completeMethod)="filterItemsClinica($event)" [size]="35"
+            [minLength]="1" placeholder="Escriba para filtrar" [dropdown]="true"  [style]="{'width':'350px'}" (onSelect)="seleccionadoClinica($event)"
+            field="nombre" >     
+          </p-autoComplete>
+      </div>
+      <div class=" col-2">
+        <div class="input-group input-group-sm mb-2">
+            <input type="number" (change)="calcularPorcentaje()" class="form-control" [(ngModel)]="medicoClinicaPorcentaje" placeholder="Porcentaje" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">%</span>
+            </div>
+          </div>
+      </div>
+
+      <div class=" col-2">
+          <div class="input-group input-group-sm mb-3">
+          <input type="number" class="form-control" [(ngModel)]="medicoClinicaDistribucion" placeholder="Distribución" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">$</span>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class=" col-6"></div>
+      <div class=" col-2"></div>
+      <div class=" col-4">
+          <h6 class="text-info">TOTAL A CALCULADO {{TOTAL_CALCULADO|  number : '1.2-2' }} $</h6>    
+      </div>
+  </div>
+    
+    
+    
+
+
+  </div>
+
+<hr>
+<h5 class="text-info">TOTAL A DISTRIBUIR {{TOTAL_DISTRIBUCION|  number : '1.2-2' }}</h5>
+
+<div><button    class="btn  btn-success btn-md btn-block"  (click)="guardarDistribucion()" >Guardar distribución</button></div>  

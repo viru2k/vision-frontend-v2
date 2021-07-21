@@ -1,0 +1,435 @@
+<div class="card mb-1">
+  <div class="row">
+<div class="  ml-2 mt-2 row  col-10" >
+      <div class="form-group  mr-4 ">                                                 
+                <div class=" input-group input-group-sm ">
+                    <label class="mr-1 mt-1">Paciente :</label>                        
+            <label class="mr-1 mt-1 " >{{elemento.paciente_nombre}}</label>                
+                </div>       
+              </div>
+        
+          <div class="form-group  mr-4 ">
+          <div class=" input-group input-group-sm ">         
+            <label class="mr-1 mt-1">Edad :</label>                        
+            <label class="mr-1 mt-1 " >{{elemento.edad}}</label>  
+          </div>   
+        </div> 
+
+        <div class="form-group  mr-2 ">
+            <div class=" input-group input-group-sm ">         
+              <label class="mr-1 mt-1">DNI :</label>                        
+              <label class="mr-1 mt-1 " >{{elemento.dni}}</label>  
+            </div>   
+          </div> 
+          <div class="form-group  mr-2 ">
+              <div class=" input-group input-group-sm ">         
+                <label class="mr-1 mt-1">Domicilio :</label>                        
+               <b><small> <label class="mr-1 mt-2 " >{{elemento.domicilio}}</label>  </small></b>
+              </div>   
+            </div> 
+        <div class="form-group  mr-4 ">
+          <div class=" input-group input-group-sm ">           
+              <label class="mr-1 mt-1">Obra social :</label>                                               
+              <label class="mr-1 mt-1 " >{{elemento.obra_social_nombre}}</label> 
+                  
+          </div>     
+        </div>
+        <div class="form-group  mr-4 ">                                                 
+          <div class=" input-group input-group-sm ">
+              <label class="mr-1 mt-1">Número :</label>  
+              <label class="mr-1 mt-1  ">{{elemento.numero_afiliado}}/{{elemento.barra_afiliado}}</label> 
+              <label class="mr-1 mt-1 ">Plan :</label>  
+              <label class="mr-1 mt-1 " >{{elemento.plan}}</label>  
+          </div>    
+        </div>
+      
+      </div> 
+     
+  </div>
+  <div class="row col-12 mt-2 mb-2">                                                 
+      <div class=" input-group input-group-sm ">
+          <div class=" pl-2">  <button    class="btn  btn-info btn-sm float-right mr-2 ml-2" (click)="verReceta()" ><i class="fas fa-file-signature "></i> Imprimir receta estudio</button></div> 
+          <div class=" pl-2"><button class="btn btn-primary btn-sm " (click)="verHistoria()">Ver historia clínica</button></div>  
+          <div class="  pl-2"><button class="btn btn-success btn-sm " (click)="guardarHistoria()">Guardar historia clínica</button></div>      
+      </div>    
+</div>
+
+<p-dialog header="Confeccionar receta" [(visible)]="display" [contentStyle]="{'overflow':'visible'}"  [responsive]="true" [style]="{width: '90%', height: '400px'}" [minY]="70" 
+[maximizable]="true" [baseZIndex]="10000">                  
+<div class="row ml-2"><label class="mr-2">REDACTAR RECETA</label> </div>
+<div class="row">
+  
+    <div>  <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" class="mt-2 ml-2" [options]="listarecetas" [(ngModel)]="selectedReceta"  defaultLabel="SELECCIONE ESTUDIOS" [panelStyle]="{minWidth:'12em'}" [filter]="true" filterBy="label,value.name" >      </p-multiSelect></div> 
+  <div class="ml-2"><p-dropdown [options]="listaindicacionesmedicas" optionLabel="name" [(ngModel)]="selectedIndicaciones" placeholder="INDICACIONES MEDICAS" optionLabel="name" [showClear]="true"></p-dropdown></div>
+</div> 
+<hr>
+<textarea [style]="{width: '100%', height: '250px'}" [(ngModel)]="diagnostico_receta" class="pt-1 col-11"  rows="3" cols="40" pInputTextarea placeholder="DIAGNOSTICO PRESUNTIVO"></textarea>
+<hr>
+<textarea [style]="{width: '100%', height: '250px'}" [(ngModel)]="historia_clinica_resumen " class="pt-1 col-11"  rows="3" cols="40" pInputTextarea  placeholder="RESUMEN HISTORIA CLINICA"></textarea>
+<div class="mt-2">
+  <button class="btn btn-info btn-sm mt-3" (click)="imprimirRecetaEscrita()"><i class="fas fa-file-signature "></i>  Imprimir receta</button>
+</div>
+
+</p-dialog>
+</div>
+<p-scrollPanel [style]="{width: '100%', height: '700px'}" styleClass="custom">
+
+<div>
+    <form [formGroup]="dataForm"  >
+    <div class="card">
+        <div class="card-body">
+
+            <div class="card mt-1">
+                <div class="card-body">
+          <div class="row">
+            <div class="col-6 row">
+                <div class="pt-1  col-12">
+                    <div>  <label class=" form-control-label ">MC: </label></div>
+                  <textarea class="pt-1 col-10" formControlName="MC" rows="3" cols="25" pInputTextarea autoResize="autoResize"></textarea>  
+                </div>   
+            </div>
+            <div class="col-6 row">
+                <div class="pt-1  col-4">
+                    <div>  <label class=" form-control-label ">AEA: </label></div>
+                  <textarea class="pt-1 col-11" formControlName="AEA" rows="3" cols="25" pInputTextarea autoResize="autoResize"></textarea>  
+                </div>   
+                <div class="pt-1  col-4">
+                    <div>  <label class="  form-control-label ">APP: </label></div>
+                    <textarea class="pt-1 col-11" formControlName="APP" rows="3" cols="25" pInputTextarea autoResize="autoResize"></textarea>
+                </div>     
+                <div class="pt-1  col-4">
+                    <div>    <label class=" form-control-label ">AF: </label></div>
+                    <textarea class="pt-1 col-11" formControlName="AF" rows="3" cols="25" pInputTextarea autoResize="autoResize" ></textarea>
+                </div>    
+            </div>
+          </div>
+
+        </div>
+      </div>
+          <!------------------------------------------------------------------------------------------------------------------>
+          <div class="row mt-2">
+              <div class="col-12">
+            
+
+<div>
+    <form [formGroup]="dataForm"  >
+    <div class="card" styleClass="ui-card-shadow">
+        <div class="card-body">
+            <div class="row">
+            <label class="card-title">EXAMEN</label>
+            </div>
+         <div class="row">
+           <div class="col-1">
+             <div>
+              
+             </div>       
+           </div>
+           <div class="col-10">
+              <div class="row">
+                  <label class="pt-1 form-control-label col-md-1" ></label>
+                  <label class="  col-md-2 form-control-sm  ml-2 mr-2"  >AV s/c</label>
+                  <!-- <label class="  col-md-2 form-control-sm  mr-2" >Autorefractometro</label> -->
+                  <label class="  col-md-2 form-control-sm  mr-2" >AV c/c</label>
+                  <label class="  col-md-2 form-control-sm  mr-2" >AV c/e</label>                       
+               </div>
+             <div class="row">
+                <label class="pt-1 form-control-label col-md-1 ">OD: </label>
+                <input class=" form-control col-md-2 form-control-sm  ml-2 mr-2" formControlName="AV_LEJOS_O" autofocus>
+                <!-- <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="AV_LEJOS_2" > -->
+                <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="AV_LEJOS_3">
+                <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="AV_LEJOS_4">   
+                
+             </div>
+             <div class="row">
+                <label class="pt-1  form-control-label col-md-1 mt-1 ">OI: </label>
+                <input class=" form-control col-md-2 form-control-sm  ml-2 mr-2 mt-1" formControlName="AV_LEJOS_5">
+                <!-- <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="AV_LEJOS_6"> -->
+                <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="AV_LEJOS_7">
+                <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="AV_LEJOS_8">       
+                           
+             </div>
+
+           </div>   
+          </div>
+           <hr>
+           <label class="pt-1  form-control-label ">AUTOREFRACTOMETRO: </label>
+           <div class="row"> 
+           <div class="col-1">
+    
+            </div>
+            <div class="col-10">
+               <div class="row">
+          
+                  <div class="row col-12 ">
+                      <div class="col-1"> <label class="pt-1  form-control-label  ">OD: </label></div>
+                        <div class="col-3"> <input class=" form-control  form-control-sm  ml-2 mr-2" formControlName="REFRACCION_OD"></div>
+                      <div class="col-1"> <label class="pt-1  form-control-label  ">OI: </label></div>
+                        <div class="col-3"> <input class=" form-control  form-control-sm  ml-2 mr-2" formControlName="REFRACCION_OI"></div>
+                        <div class="col-4"></div>
+                      </div>   
+                    </div>   
+                  </div>   
+                </div>  
+<hr>
+                      <label class="pt-1  form-control-label">REFRACCION CON CICLOPEGIA: </label>
+                      <div class="row"> 
+                        <div class="col-1">
+                 
+                         </div>
+                         <div class="col-10">
+                            <div class="row">
+                      <div class="row col-12">
+                          <div class="col-1">  <label class="pt-1  form-control-label ">OD: </label></div>
+                            <div class="col-3"><input class=" form-control  form-control-sm ml-2 mr-2" formControlName="CICLOPEGIA_OD"></div>
+                          <div class="col-1">  <label class="pt-1  form-control-label ">OI: </label></div>
+                            <div class="col-3"> <input class=" form-control  form-control-sm ml-2 mr-2" formControlName="CICLOPEGIA_OI"></div>
+                            <div class="col-4"></div>
+                          </div>   
+                        </div>   
+                      </div>   
+                    </div>  
+    
+
+         </div>         
+        
+        
+      </div>
+  <div class="card mt-1">
+      <div class="card-body">
+        <div class="row">
+          <label class="card-title ">LENTE</label>
+          
+          <div class="  col-md-7 float-right pl-2">  <label class="  card-title text-danger">¡Atencion!  Si modifica un valor, borrar el número completo y volver a escribir</label></div>
+          
+         <div class="  col-md-1 pl-2"> <label class="   form-control-sm mr-2" >Adicionar</label>     </div>
+         <div class="  col-md-1 pl-2"> <p-spinner     [inputStyle] = "{'height':'30px', 'width':'85px'}" size="30" formControlName="agregar" [min]="0" [max]="3" [step]="0.25" (onChange)=actualizar($event)></p-spinner>               </div>
+          <div class="  col-md-2 pl-2 float-right"><button class="btn btn-primary btn-sm " (click)="imprimirReceta()"><i class="fas fa-file-signature "></i>  Imprimir receta</button></div>    
+        </div>
+       <div class="row">
+         <div class="col-1">
+           <div>
+              <label>LEJOS</label>
+           </div>       
+         </div>
+         <div class="col-10">
+            <div class="row">
+                <label class="pt-1 form-control-label col-md-1" ></label>
+                <label class="  col-md-2 form-control-sm  ml-2 mr-2"  >Esférico</label>
+                <label class="  col-md-2 form-control-sm  mr-2" >Cilíndrico</label>
+                <label class="  col-md-2 form-control-sm  mr-2" >Eje</label>
+                <label class="  col-md-2 form-control-sm  mr-2" >Prisma</label>                       
+                <label class="  col-md-2 form-control-sm  mr-2" >Base</label>                       
+            
+            
+             </div>
+           <div class="row">
+              <label class="pt-1 form-control-label col-md-1 ">OD: </label>
+              <input class=" form-control col-md-2 form-control-sm  ml-2 mr-2" formControlName="LEJOS_OD_E" (change)="actualizarLEJOS_OD_E()">
+              <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="LEJOS_OD_C" (change)="actualizarLEJOS_OD_C()">
+              <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="LEJOS_OD_2" (change)="actualizarLEJOS_OD_2()">
+              <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="LEJOS_OD_P" (change)="actualizarLEJOS_OD_P()">
+              <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="LEJOS_OD_B" (change)="actualizarLEJOS_OD_B()">           
+           </div>
+           <div class="row">
+              <label class="pt-1  form-control-label col-md-1 mt-1 ">OI: </label>
+              <input class=" form-control col-md-2 form-control-sm  ml-2 mr-2 mt-1" formControlName="LEJOS_OI_E" (change)="actualizarLEJOS_OI_E()">
+              <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="LEJOS_OI_C" (change)="actualizarLEJOS_OI_C()">
+              <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="LEJOS_OI_2" (change)="actualizarLEJOS_OI_2()">
+              <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="LEJOS_OI_P" (change)="actualizarLEJOS_OI_P()">
+              <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="LEJOS_OI_B" (change)="actualizarLEJOS_OI_B()">              
+           </div>
+         </div>       
+       </div>
+       <hr>
+       <div class="row">
+          <div class="col-1">
+            <div>
+               <label>CERCA</label>
+            </div>       
+          </div>
+          <div class="col-10">
+            <div class="row">
+               <label class="pt-1 form-control-label col-md-1 ">OD: </label>
+               <input class=" form-control col-md-2 form-control-sm  ml-2 mr-2" formControlName="CERCA_OD_E">
+               <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="CERCA_OD_C">
+               <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="CERCA_OD_2">
+               <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="CERCA_OD_P">
+               <input class=" form-control col-md-2 form-control-sm  mr-2" formControlName="CERCA_OD_B">           
+            </div>
+            <div class="row">
+               <label class="pt-1  form-control-label col-md-1 mt-1 ">OI: </label>
+               <input class=" form-control col-md-2 form-control-sm  ml-2 mr-2 mt-1" formControlName="CERCA_OI_E">
+               <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="CERCA_OI_C">
+               <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="CERCA_OI_2">
+               <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="CERCA_OI_P">
+               <input class=" form-control col-md-2 form-control-sm  mr-2 mt-1" formControlName="CERCA_OI_B">              
+            </div>
+          </div>       
+        </div>
+        <hr>
+        <div class="row  mt-2">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <div class="row">
+          <div class="col-2"> <label class="pt-1  form-control-label ">OBSERVACION: </label></div>
+          <div class="col-4">
+              <textarea  class=" float-left form-control  text-sm form-control-sm  ml-2 mr-2" formControlName="OBS_LENTES" rows="5" cols="25" pInputTextarea autoResize="autoResize"></textarea>  </div>
+         
+          <div class="col-2">     <label class="pt-1  form-control-label ">DIAGNOSTICO: </label></div>
+          <div class="col-4">
+          <textarea  class=" float-left form-control  text-sm form-control-sm  ml-2 mr-2" formControlName="OBSERVACIO" rows="5" cols="25" pInputTextarea autoResize="autoResize"></textarea>  </div>          
+        </div>
+        </div>
+      </div>
+      </div>
+    </div> 
+   
+  </form>
+<!-- 
+  <div class="card mt-2">
+    <div class="card-body">
+
+        <label class="pt-1  form-control-label">DIAGNOSTICO: </label>
+        <div class="row col-12 ">
+            <div class="col-1"> <label class="pt-1  form-control-label  ">OD: </label></div>
+              <div class="col-5"> <input class=" form-control  form-control-sm  " formControlName="DIAGNOSTICO_OD"></div>
+            <div class="col-1"><label class="pt-1  form-control-label  ">OI: </label></div>
+              <div class="col-5"> <input class=" form-control  form-control-sm  " formControlName="DIAGNOSTICO_OI"></div>
+  </div>
+</div>
+</div> -->
+  </div>
+  
+  
+<!--------------------------------------------------------------------------------------------------------------------->
+                
+              </div>
+          </div>   
+
+
+
+
+
+
+          <div class="card mt-2">
+              <div class="card-body">
+
+                          <label class="pt-1  form-control-label">BIOMICROSCOPIA: </label>                                                                                                        
+                          <div class="row col-12 ">
+                      <div class="col-1"><label class="pt-1  form-control-label ">OD: </label></div>
+                      <div class="col-4">   <textarea  class=" float-left form-control  text-sm form-control-sm  ml-2 mr-2" formControlName="BIO_OD"  rows="1" cols="30" pInputTextarea autoResize="autoResize"></textarea> </div>
+                      <div class="col-1"><label class="pt-1  form-control-label ">OI: </label></div>
+                      <div class="col-4">  <textarea  class=" float-left form-control  text-sm form-control-sm  ml-2 mr-2" formControlName="BIO_OI"  rows="1" cols="30" pInputTextarea autoResize="autoResize"></textarea>                </div>                
+                    </div>
+                    <label class="mt-2 form-control-label ">BIO DETALLE: </label>
+                    <div class="row col-12  ">
+                      
+                      <textarea class="pt-1 col-11" formControlName="BIO" rows="3" cols="25" pInputTextarea autoResize="autoResize"></textarea> 
+                    </div>
+                  <hr>
+
+
+                  <label class="pt-1  form-control-label">PRESION INTRAOCULAR: </label>
+                  <div class="row col-12 ">
+                      <div class="col-1"><label class="pt-1  form-control-label  ">OD: </label></div>
+                        <div class="col-2"> <input class="  float-left form-control  text-sm form-control-sm  ml-2 mr-2" formControlName="PIO_OD"></div>
+                      <div class="col-1"><label class="pt-1  form-control-label  ">OI: </label></div>
+                        <div class="col-2"> <input class="  float-left form-control  text-sm form-control-sm  ml-2 mr-2" formControlName="PIO_OI"></div>
+                      </div>
+                    </div>
+                  </div>
+
+            
+                 
+          
+          
+
+                  <div class="card mt-2">
+                    <div class="card-body">
+                   <label class="pt-1  form-control-label">SINTOMAS Y SIGNOS: </label>
+               <div class="row col-12 mt-2 ">             
+                <div class="col-12"> <textarea class="pt-1 col-12" formControlName="SINTOMAS_SIGNOS" rows="3" cols="30" pInputTextarea></textarea></div>
+
+              </div>
+          </div>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-body">
+               <label class="pt-1  form-control-label">ESTUDIOS </label>
+           <div class="row col-12 mt-2 ">             
+              <div class="col-12"> <textarea class="pt-1 col-12" formControlName="ESTUDIOS" rows="3" cols="30" pInputTextarea></textarea></div>
+              
+
+          </div>
+      </div>
+        </div>
+         
+           
+
+
+
+          <div class="card mt-2">
+              <div class="card-body">
+
+                  <label class="pt-1  form-control-label ">FONDO DE OJO: </label>
+                  <div class="row col-12 ">
+                      <div class="col-1"><label class="pt-1  form-control-label  ">OD: </label></div>
+                      <div class="col-2"> <textarea class="pt-1 col-12" formControlName="FONDO_OD" rows="2" cols="30" pInputTextarea></textarea></div>                        
+                      <div class="col-1"><label class="pt-1  form-control-label  ">OI: </label></div>
+                      <div class="col-2"> <textarea class="pt-1 col-12" formControlName="FONDO_OI" rows="2" cols="30" pInputTextarea></textarea></div>                        
+                  </div> 
+                  <div>  <label class=" pt-1 form-control-label">FONDO DE OJO ADICIONAL: </label></div>
+                  <div class="row col-12 ">
+                   
+                    <textarea class="pt-1 col-11" formControlName="FO" rows="3" cols="25" pInputTextarea autoResize="autoResize"></textarea> 
+                  </div>
+                  <div>  <label class=" pt-1 form-control-label">ESTUDIOS FONDO DE OJO: </label></div>
+                  <div class="row col-12 ">
+                   
+                    <textarea class="pt-1 col-11" formControlName="ESTUDIOSES" rows="3" cols="25" pInputTextarea autoResize="autoResize"></textarea> 
+                  </div>
+          </div>
+    </div>
+
+  
+
+  <div class="card mt-2">
+      <div class="card-body">
+          <label class="pt-1  form-control-label col-3">TRATAMIENTO: </label>   <button    class="btn  btn-info btn-sm float-right mr-2 ml-2" (click)="verReceta()" ><i class="fas fa-file-signature "></i> Imprimir receta estudio</button>
+      <div class="row mt-2">
+          <div class="col-6">
+            <div class="row">
+              <label class="pt-1  form-control-label col-2 ">MEDICO: </label>
+              <textarea class="pt-1 col-10" formControlName="TRATAMIENTO_MEDICO" rows="3" cols="30" pInputTextarea></textarea>
+            </div>  
+          </div>    
+          <div class="col-6">
+            <div class="row">
+                 <label class="pt-1  form-control-label col-2 ">QUIRURGICO: </label>
+                 <textarea class="pt-1 col-10"  pInputTextarea rows="3" cols="30" formControlName="TRATAMIENTO_QUIRURGICO"></textarea>
+            </div>   
+           </div>    
+      </div>   
+      <div class="row">
+    
+    </div>  
+    </div>   
+  </div>
+
+</div>
+</div>
+</form>
+
+<div class="card mt-1">
+    <div class="card-body">
+        <div class="row pt-2"> 
+                            
+            
+        </div>
+  </div>
+</div>
+</div>
+</p-scrollPanel>
+
+

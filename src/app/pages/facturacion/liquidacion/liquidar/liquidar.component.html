@@ -1,0 +1,133 @@
+
+
+
+  <div  class="input-group input-group-sm ml-2">
+         
+          <div class="btn-group mr-1 m-2 d-flex align-items-center" role="group"> 
+                                 
+                  </div>                                          
+            <div class="  row mr-2 d-flex align-items-center">   
+                  <div class=" input-group input-group-sm d-flex align-items-center">                        
+                        <p-dropdown [options]="impresiones" [(ngModel)]="selectedImpresion" optionLabel="name" ></p-dropdown>                            
+                        <button    class="btn btn-sm btn-success  float-right  ml-2 " (click)="imprimir()" >Buscar</button>  
+                    </div>     
+            </div>   
+  
+  
+</div>
+<div class="ml-2 d-flex justify-content-start d-flex align-items-center">                                                                                                   
+
+<span class="mr-2 ml-2 mt-1"><label>Liquidación número: </label></span>
+<input type="number" class=" form-control-sm col-1 form-control" [(ngModel)]="liquidacion_nro"> 
+<span class="mr-2 ml-2 mt-1"><label>Descripción: </label></span>
+<input type="text" class=" form-control-sm col-1 form-control" [(ngModel)]="detalle"> 
+<span class="ml-2 mr-2 mt-1"><label>Periodo liquidado:</label></span>
+<p-calendar [inputStyle]="{'height':'29.1px'}"  class="mr-2  " [(ngModel)]="fechaLiquidacion"  (onSelect)="actualizarFechaLiquidacion($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true" showButtonBar="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1950:2100">
+  <ng-template pTemplate="date" let-date>
+       <span  inputStyle="{'height':'29.5px'}"  style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+   </ng-template> 
+ </p-calendar>     
+ <button class="btn btn-info btn-sm" (click)="generarLiquidacion()">Generar liquidación</button>
+</div>  
+
+  <div class=" m-2">
+  <p-table  #dt class=""  tableStyleClass="prime-table" selectionMode="single" [columns]="cols" [value]="elementos"   [(selection)]="selecteditems" columnResizeMode="expand" [responsive]="true"
+  scrollHeight="500px" [scrollable]="true"  (onFilter)="filtered($event)" [loading]="loading" loadingIcon="fas fa-spinner fa-2x icon-color-green" >
+
+  <ng-template pTemplate="caption">
+    <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-start">
+               <div> 
+                <button    class="btn  btn-success btn-sm   pr-2" (click)="listarLiquidaciones()" >Listar liquidaciones</button>      
+              </div>       
+        </div>
+        <div class="d-flex justify-content-end">
+            <div> 
+              <button    class="btn  btn-warning btn-sm   pr-2" (click)="verDetalleTodos()" >Ver detalle seleccionados</button>  
+              <button    class="ml-2  btn  btn-excel btn-sm float-right "  (click)="exportarExcelResumen()" > <i class="fa fa-file-excel-o  mr-1" aria-hidden="true"> </i> Exportar a excel</button>
+            </div>       
+        </div>
+    </div>
+  
+</ng-template>
+
+             <ng-template pTemplate="header" let-columns >
+            
+                        <tr >
+                             
+                          <th  *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
+                              {{col.header}}
+                              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                          </th> 
+                          <th style="width: 3em">
+                            <p-tableHeaderCheckbox  (onChange)="sumarValoresSeleccionados(selecteditems)"></p-tableHeaderCheckbox>
+                          </th>
+                      </tr> 
+                      <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field"  >
+                        <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                        <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_obra_social_nombre" appendTo="body" defaultLabel="Obra social"	 *ngIf='col.field =="obra_social_nombre"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                        <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_entidad_nombre" appendTo="body" defaultLabel="Entidad"	 *ngIf='col.field =="entidad_nombre"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                        <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_nivel" appendTo="body" defaultLabel="Nivel"	 *ngIf='col.field =="nivel"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                        <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_numero" appendTo="body" defaultLabel="Periodo"	 *ngIf='col.field =="numero"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                        <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_fecha_desde" appendTo="body" defaultLabel="Desde"	 *ngIf='col.field =="fecha_desde"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                        <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_fecha_hasta" appendTo="body" defaultLabel="Hasta"	 *ngIf='col.field =="fecha_hasta"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                        <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'cant_orden'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                        <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'total'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                       
+                        <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_medico_nombre" appendTo="body" defaultLabel="Médico"	 *ngIf='col.field =="medico_nombre"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>                                                  
+                        <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'nombreyapellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      </th>
+                      <th></th>
+                  </tr>
+              </ng-template>
+            
+      <ng-template pTemplate="body" let-elementos  >
+          <tr style="height:28px"  >
+                 
+                  <td style="width: 6%" >                   
+                      <a  class="my-hover" (click)="verDetalle(elementos)"    ><i class="fas fa-tasks fa-2x icon-color-purple"></i></a>
+                   
+                  </td>
+                  <td style="width: 7%">{{elementos.id}}</td>
+                  <td style="width: 20%">{{elementos.obra_social_nombre}}</td>
+                  <td style="width: 10%">{{elementos.entidad_nombre}}</td>
+                  <td style="width: 8%">{{elementos.numero |date:'dd/MM/yyyy'}}</td>
+                  <td style="width: 10%">{{elementos.nivel}}</td>
+                  <td style="width: 10%">{{elementos.fecha_desde |date:'dd/MM/yyyy'}}</td>
+                  <td style="width: 10%">{{elementos.fecha_hasta |date:'dd/MM/yyyy'}}</td>                                                    
+                  <td style="width: 10%">{{elementos.cant_orden}}</td>                            
+                  <td style="width: 20%">{{elementos.total}}</td>  
+                  <td style="width: 15%">{{elementos.medico_nombre}}</td>                                
+                  <td style="width: 15%">{{elementos.nombreyapellido}}</td>      
+                  <td style="width: 3em">
+                      <p-tableCheckbox [value]="elementos" (click)="sumarValoresSeleccionados(selecteditems)"></p-tableCheckbox>
+                      </td>
+          </tr>
+      </ng-template>
+
+      
+      <ng-template pTemplate="footer">
+          <tr style="height:28px"  >
+          <td style="width: 6%" >                                
+          </td>
+          <td style="width: 7%"></td>
+          <td style="width: 20%"></td>
+          <td style="width: 10%"></td>
+          <td style="width: 8%"></td>          
+          <td style="width: 20%">SELECCIONADO</td>
+          <td style="width: 10%">{{total_seleccionado |  number : '1.2-2'}}</td>                                                    
+          <td style="width: 10%">TOTAL : </td>                            
+          <td style="width: 20%">{{total_facturado |  number : '1.2-2'}}</td>  
+          <td style="width: 15%"></td>                                
+          <td style="width: 15%"></td>      
+          <td style="width: 3em">
+              </td>
+            </tr>
+          </ng-template> 
+  </p-table>
+</div>
+
+
+<p-overlayPanel #op [showTransitionOptions]="'400ms'" [hideTransitionOptions]="'300ms'"  [dismissable]="true" >                            
+    <span>   <a class="nav-link azul text-info my-hover" (click)="verDetalle(selecteditems)">Ver detalle</a></span>
+  </p-overlayPanel>  

@@ -1,0 +1,49 @@
+<div class="row col-12">        
+  <button class="btn btn-success btn-sm" (click)="agregarInsumo()">Agregar insumo</button>          
+</div>
+<div class="row">
+
+<p-table  #dt class="pt-2" scrollHeight="500px"  tableStyleClass="prime-table" selectionMode="single" [columns]="cols" [value]="elementos"  [(selection)]="elementos" columnResizeMode="expand" [responsive]="true"
+scrollHeight="600px" [scrollable]="true"   >
+<ng-template pTemplate="caption">
+    <div class="row">
+    <div class="col-md-5" style="text-align:right">                                
+        <input  class="form-control col-md-12 form-control-sm" type="text"  placeholder="Buscar en toda la tabla" (input)="dt.filterGlobal($event.target.value, 'contains')"  >
+    </div>
+ </div>
+</ng-template>
+
+<ng-template pTemplate="header" let-columns >
+
+        <tr >
+            <th  *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}" >
+                {{col.header}}
+                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+            
+        </tr>
+        <tr>
+              
+        <th *ngFor="let col of columns" [ngSwitch]="col.field" >
+            <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'insumo_descripcion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+            <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'cantidad'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">         
+        </th>
+    </tr>
+</ng-template>
+
+
+<ng-template pTemplate="body" let-elementos  >
+<tr style="height:28px">
+           
+      <td style="width: 70%">{{elementos.insumo_descripcion}}</td>
+      <td style="width: 20%">{{elementos.cantidad}}</td>         
+      
+      <td style="width: 10%">
+        <button class="btn btn-success btn-sm" (click)="editar(elementos)">Editar</button>
+        </td>   
+</tr>
+
+</ng-template>  
+</p-table>
+
+</div>

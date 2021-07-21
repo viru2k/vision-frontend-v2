@@ -1,0 +1,28 @@
+
+            <form class="col-md-12"  [formGroup]="updateDataForm">
+              <div class="row">
+                  <div class="col-md-8">
+                      <div class="form-group ">
+                              <label  >Descripción</label>
+                              <input class="form-control col-md-12 form-control-sm" formControlName="insumo_descripcion"   />
+                              
+                      </div>
+                      <div class="form-group">
+                              <label  >Cantidad</label>
+                              <input type="number" class="form-control col-md-12 form-control-sm" formControlName="cantidad"   />
+                             
+                      </div>
+                     
+          </div>
+       
+      </div>
+           
+          </form>
+       
+          <p-footer>
+                  <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                          <button  [disabled]="!updateDataForm.valid" [formGroup]="updateDataForm" class="btn btn-primary" type="submit" (click)="guardar()" >Guardar</button>
+                       
+                  </div>
+              </p-footer>
+     

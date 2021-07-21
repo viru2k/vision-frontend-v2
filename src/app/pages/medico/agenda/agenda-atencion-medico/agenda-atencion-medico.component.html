@@ -1,0 +1,162 @@
+
+<div>
+    <app-loading *ngIf="loading"> </app-loading>
+   <!-- <button  *ngIf="loading"   class="btn btn-lg btn-success btn-sm float-right mr-2" (click)="loadTurnoTodos()" >Actualizar</button>-->
+</div>
+
+<div>
+
+    <div class="row ml-3" >
+        <div class="button mt-3" >
+            <i  data-toggle="tooltip" data-placement="top" title="Pacientes derivados a recepción" (click)="verListadoEspera()" tooltip class="fas fa-user-check icon-color-green-light pointer my-hover nav-links fa-2x" pInputText pTooltip="Pacientes en espera" tooltipPosition="top" tooltipEvent="hover"></i>
+            <span class="button__badge">{{derivados}}</span>
+          </div>
+
+          <div class="button mt-3 ml-2" >
+            <i  data-toggle="tooltip" data-placement="top" title="Pacientes derivados a asesoramiento" (click)="verListadoEspera()" class="fas fa-user-astronaut icon-color-red-light pointer my-hover nav-links fa-2x" pInputText pTooltip="Pacientes en espera" tooltipPosition="top" tooltipEvent="hover"></i>
+            <span class="button__badge">{{asesoramiento}}</span>
+          </div>
+
+                <div class="col-2">
+                    <form  [formGroup]="DateForm">
+                    <div class="btn-group mt-3 ml-2" role="group">
+                         <p-calendar class="mr-2 "formControlName="fechaHoy"  (onSelect)="actualizarFecha($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true">
+                        <ng-template pTemplate="date" let-date>
+                             <span  [ngClass]="colorRow(date)"  style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                         </ng-template>
+                        </p-calendar>
+                    </div>
+                    </form>
+                </div>
+                    <div class="row col-6 float-right">
+                    <div class=" col-10 row  float-left mt-1">
+                            <div  class="btn-group btn-sm " role="group" aria-label="First group">
+                                <button    class="btn  btn-success btn-sm float-right mr-2 "  (click)="loadListByMedico()" >Buscar turnos</button>
+                                <button    class="btn  btn-danger btn-sm  float-right mr-2" (click)="darSobreTurno()" >Dar sobre turno</button>
+                               <button    class="btn  btn-info btn-sm float-right mr-2"  (click)="loadListTodosTurnos()" >Ver todos los turnos</button>
+
+                            </div>
+                    </div>
+                    <div class="col-2  float-right mt-1">
+                        <button    class="ml-2 btn  btn-primary btn-sm float-right "  (click)="generarPdf()" >Imprimir</button>
+                    </div>
+                </div>
+        </div>
+
+
+
+    <div>
+
+        <div >
+            <hr>
+
+            <p-table  #dt class="pt-2 mr-3 ml-3"  tableStyleClass="prime-table" selectionMode="single" [columns]="cols"  [value]="agendaTurno" [(selection)]="selecteditems"   columnResizeMode="expand" [responsive]="true"
+            scrollHeight="600px" [scrollable]="true" (onFilter)="filtered($event)">
+
+
+               <ng-template pTemplate="header" let-columns >
+
+                          <tr >
+
+                            <th  *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
+                                    {{col.header}}
+                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activar para ordenar en forma descendente" ariaLabelAsc="Activar para ordenar en forma ascendente"></p-sortIcon>
+                                </th>
+
+                            </tr>
+                            <tr>
+                            <th *ngFor="let col of columns" [ngSwitch]="col.field" >
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'operacion_cobro_id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'paciente_apellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'paciente_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'paciente_obra_social_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'hora_desde'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12"  *ngSwitchCase="'llegada'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'atendido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'estado'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'dia_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'usuario_alta'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'boton'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'boton1'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                            </th>
+
+                        </tr>
+                    </ng-template>
+
+                <ng-template pTemplate="body" let-agendaTurno>
+
+                <tr style="height:28px" [ngClass]="colorRow(agendaTurno.estado)" >
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 5%"><a class="my-hover" (click)="verDetalle(agendaTurno)">{{agendaTurno.operacion_cobro_id}}</a></td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.paciente_apellido}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.paciente_nombre}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 16%">{{agendaTurno.paciente_obra_social_nombre}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 10%">{{agendaTurno.hora_desde}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 7%" >{{agendaTurno.presente | date: 'HH:mm:ss'}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" class="font-weight-bold text-info" style="width: 7%"  >{{agendaTurno.llegada | date: 'HH:mm:ss'}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 7%" >{{agendaTurno.atendido | date: 'HH:mm:ss'}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.estado}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.dia_nombre}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.usuario_alta}}</td>
+
+                        <td style="width: 4%" #mirow>
+
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-user-astronaut fa-2x icon-color-orange-light" *ngIf="agendaTurno.es_observacion === 'CONTROL PREQUIRURGICO'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-user-md fa-2x icon-color-blue" *ngIf="agendaTurno.es_observacion === 'CONTROL POSQUIRURGICO'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer far fa-bell fa-2x icon-color-green" *ngIf="agendaTurno.es_observacion === 'ESTUDIOS'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-first-aid fa-2x icon-color-green " *ngIf="agendaTurno.es_observacion === 'ASESORAMIENTO QUIRURGICO'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-exclamation-circle fa-2x icon-color-red" *ngIf="agendaTurno.es_observacion === 'ADVERTENCIA'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-user-plus fa-2x icon-color-red-light " *ngIf="agendaTurno.es_observacion === 'PACIENTE NUEVO'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fas fa-syringe fa-2x icon-color-purple " *ngIf="agendaTurno.es_observacion === 'ANESTESIA'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer far fa-address-card fa-2x icon-color-green-light" *ngIf="agendaTurno.es_observacion === 'SOLICITUD DE TURNO'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-procedures fa-2x icon-color-green-light" *ngIf="agendaTurno.es_observacion === 'CIRUGIA'"  ></i></a>
+                            <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-briefcase-medical fa-2x icon-color-blue" *ngIf="agendaTurno.es_observacion === 'CONSULTA'"  ></i></a>
+                                </td>
+                        <td style="width: 4%">
+                         <!--    <button type="button"   class="btn btn-success btn-md p-1 pr-1" (click)="accion($event,op,agendaTurno)"    ><i class="far fa-edit fa-2x icon-color-purple"></i></button> -->
+                         <a   (click)="accion($event,op,agendaTurno)"   ><i class="far fa-edit fa-2x my-hover" ></i></a>
+
+                           </td>
+
+                        <td style="width: 8%">
+                            <button  [disabled]="agendaTurno.estado == 'PRESENTE'  || agendaTurno.estado == 'PENDIENTE' || agendaTurno.estado == 'CANCELADO'" type="button" class="btn btn-info btn-sm" (click)="pacienteIngresado(agendaTurno)"    >Llamar</button>
+                        </td>
+                        <td style="width: 10%">
+                            <button  [disabled]="agendaTurno.estado == 'PRESENTE'  || agendaTurno.estado == 'ESPERA' || agendaTurno.estado == 'SOBRETURNO' || agendaTurno.estado == 'CANCELADO'" type="button" class="btn btn-primary btn-sm" (click)="pacienteAtendido(agendaTurno)"    >Atendido</button>
+                        </td>
+                        <td style="width: 10%">
+
+                            <button  [disabled]="agendaTurno.estado == 'PRESENTE' || agendaTurno.estado == 'ESPERA' || agendaTurno.estado == 'SOBRETURNO' || agendaTurno.estado == 'CANCELADO'" type="button" class="btn btn-warning btn-sm" (click)="accion($event,bn,agendaTurno)"   >Derivar</button>
+
+                        </td>
+
+                </tr>
+                </ng-template>
+
+                </p-table>
+                <p-overlayPanel #bn [showTransitionOptions]="'400ms'" [hideTransitionOptions]="'300ms'"  [dismissable]="true" [showCloseIcon]="true" >
+                    <label class="text-info">Derivar a</label>
+                    <hr>
+                     <span>   <a class="nav-link azul my-hover" (click)="pacienteDerivado(agendaTurno)" >Recepción</a></span>
+                     <hr>
+                     <span>   <a class="nav-link azul my-hover" (click)="pacienteDerivadoAsesoramiento(agendaTurno)" >Asesoramiento</a></span>
+             </p-overlayPanel>
+                <p-overlayPanel #op  [showTransitionOptions]="'400ms'" [hideTransitionOptions]="'300ms'"  [dismissable]="true" [showCloseIcon]="true" >
+                        <span>   <a class="nav-link azul my-hover " (click)="editarRegistro('historia')"> Historia clínica</a></span>
+                        <span>   <a class="nav-link azul my-hover" (click)="editarRegistro('turno')">  Dar turno</a></span>
+                        <hr>
+                        <span>   <a class="nav-link azul my-hover" (click)="editarRegistro('observacion')">  Ver observación</a></span>
+                        <span>   <a class="nav-link azul text-danger my-hover" (click)="buscarPacienteConsulta()">  Ver / editar paciente</a></span>
+                </p-overlayPanel>
+
+        </div>
+
+
+
+    </div>
+</div>
+
+<p-dialog header="Observación" class="text-primary" [(visible)]="display" class="p-2" [baseZIndex]="10000" [responsive]="true">
+        <label>MOTIVO :  {{motivo}}</label>
+        <textarea [rows]="5" [cols]="30" pInputTextarea class="form-control form-control-sm col-md-12"[(ngModel)]="observacion"></textarea>
+
+        </p-dialog>

@@ -1,0 +1,148 @@
+<div >
+
+
+    <div class=" d-flex justify-content-between mr-2">
+
+
+            <div class="d-flex justify-content-between">
+
+                  <div class=" d-flex justify-content-start ml-2 ">
+                      <form  [formGroup]="DateForm" class="m-2">
+                          <p-calendar formControlName="fechaHoy"  (onSelect)="actualizarFecha($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy "   [readonlyInput]="true">
+                            </p-calendar>
+                      </form>
+                  </div>
+
+
+                  <div class="d-flex justify-content-between">
+                      <button class="btn btn-primary btn-sm btn-round" type="button" (click)="buscarHistoriaUsuario()" pInputText pTooltip="Buscar datos del paciente" placeholder="Right" tooltipEvent="hover">
+                          <i class="fas fa-search"></i> Buscar paciente
+                      </button>
+
+                  </div>
+
+            </div>
+
+
+
+      <div class=" d-flex justify-content-end">
+                              <div  class=" row ">
+                                  <button    class="btn btn-link btn-success mr-2" (click)="generarPdf()" pInputText pTooltip="Imprimir turnos seleccionados" placeholder="Right" tooltipEvent="hover">Imprimir turnos</button>
+                                 <button    class="btn btn-link btn-primary mr-2" (click)="loadAgendaCancelada()" >Turnos cancelados</button>
+                                 <button    class="btn btn-link btn-info mr-2" (click)="darSobreTurno()" >Dar sobre turno</button>
+                              </div>
+              </div>
+          </div>
+
+
+            <p-table  #dt class="pt-2"  tableStyleClass="prime-table" selectionMode="single" [columns]="cols"  [value]="agendaTurno" [(selection)]="selecteditems"   columnResizeMode="expand" [responsive]="true"
+            scrollHeight="500px" [scrollable]="true" (onFilter)="filtered($event)" [loading]="loading" loadingIcon="fas fa-spinner fa-3x icon-color-loader">
+
+
+
+
+               <ng-template pTemplate="header" let-columns >
+
+                <tr >
+
+                    <th  *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                    <th style="width: 3em">
+                      <p-tableHeaderCheckbox  ></p-tableHeaderCheckbox>
+                    </th>
+                </tr>
+                <tr>
+                            <th *ngFor="let col of columns" [ngSwitch]="col.field" >
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'operacion_cobro_id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'paciente_apellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'paciente_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'paciente_dni'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                 <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_paciente_obra_social_nombre" appendTo="body" defaultLabel="Buscar"	 *ngIf='col.field =="paciente_obra_social_nombre"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'telefono_cel'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'hora_desde'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                 <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_estado" appendTo="body" defaultLabel="Filtrar"	 *ngIf='col.field =="estado"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                                 <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_nombreyapellido" appendTo="body" defaultLabel="Filtrar"	 *ngIf='col.field =="nombreyapellido"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'dia_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12"  *ngSwitchCase="'llegada'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'atendido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'boton1'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                <input class="form-control form-control-sm col-md-12" *ngSwitchCase="'boton2'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                            </th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+
+                <ng-template pTemplate="body" let-agendaTurno>
+
+                <tr style="height:28px" [ngClass]="colorRow(agendaTurno.estado)" >
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 5%"><a class="my-hover" (click)="verDetalle(agendaTurno)">{{agendaTurno.operacion_cobro_id}}</a></td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.paciente_apellido}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.paciente_nombre}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.paciente_dni}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 5%">{{agendaTurno.edad}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.paciente_obra_social_nombre}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">
+                            {{agendaTurno.telefono_fijo}}
+                            <a *ngIf="agendaTurno.tiene_whatsapp ==='true'" href="https://api.whatsapp.com/send?l=es&phone='549{{agendaTurno.telefono_cel}}'&text=Buen%20dia%20Le%20recordamos%20que%20el%20dia%20{{agendaTurno.dia_nombre}}%20{{agendaTurno.fecha_turno  | date: 'dd/MM'}}%20tiene%20un%20turno%20con%20el%20doctor%20{{agendaTurno.nombreyapellido}}&source=&data=" class="float my-hover navbar-font hvr-shrink pt-1" target="_blank">
+                                <i class="fa fa-whatsapp my-float fa-2x"></i>
+                            </a>
+                        </td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 10%">{{agendaTurno.hora_desde}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%">{{agendaTurno.estado}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 15%">{{agendaTurno.nombreyapellido}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 6%">{{agendaTurno.dia_nombre}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%" >{{agendaTurno.llegada | date: 'HH:mm:ss'}}</td>
+                        <td [ngClass]="colorEsSobreturno(agendaTurno.es_sobreturno,agendaTurno.estado)" style="width: 8%" >{{agendaTurno.atendido | date: 'HH:mm:ss'}}</td>
+                        <td style="width: 4%" >
+
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-user-astronaut fa-2x icon-color-orange-light" *ngIf="agendaTurno.es_observacion === 'CONTROL PREQUIRURGICO'"  ></i></a>
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-user-md fa-2x icon-color-blue" *ngIf="agendaTurno.es_observacion === 'CONTROL POSQUIRURGICO'"  ></i></a>
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer far fa-bell fa-2x icon-color-green" *ngIf="agendaTurno.es_observacion === 'ESTUDIOS'"  ></i></a>
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-first-aid fa-2x icon-color-green " *ngIf="agendaTurno.es_observacion === 'ASESORAMIENTO QUIRURGICO'"  ></i></a>
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-exclamation-circle fa-2x icon-color-red" *ngIf="agendaTurno.es_observacion === 'ADVERTENCIA'"  ></i></a>
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-user-plus fa-2x icon-color-red-light " *ngIf="agendaTurno.es_observacion === 'PACIENTE NUEVO'"  ></i></a>
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fas fa-syringe fa-2x icon-color-purple " *ngIf="agendaTurno.es_observacion === 'ANESTESIA'"  ></i></a>
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer far fa-address-card fa-2x icon-color-green-light" *ngIf="agendaTurno.es_observacion === 'SOLICITUD DE TURNO'"  ></i></a>
+                      <a   (click)="verMotivo($event,op,agendaTurno)"   >    <i class="pointer fas fa-procedures fa-2x icon-color-green-light" *ngIf="agendaTurno.es_observacion === 'CIRUGIA'"  ></i></a>
+
+
+                        </td>
+                        <td style="width: 4%">
+                         <!--    <button type="button"   class="btn btn-success btn-md p-1 pr-1" (click)="accion($event,op,agendaTurno)"    ><i class="far fa-edit fa-2x icon-color-purple"></i></button> -->
+                         <a   (click)="accion($event,op,agendaTurno)"   ><i class="far fa-edit fa-2x my-hover" ></i></a>
+
+                           </td>
+                           <td style="width: 3em">
+                            <p-tableCheckbox [value]="agendaTurno"></p-tableCheckbox>
+                        </td>
+                </tr>
+                </ng-template>
+
+            </p-table>
+
+                <p-overlayPanel #op [showTransitionOptions]="'400ms'" [hideTransitionOptions]="'300ms'"  [dismissable]="true" >
+                        <span>   <a class="nav-link azul my-hover" (click)="editarRegistro('observacion')">  Ver observación</a></span>
+                        <span>   <a class="nav-link azul my-hover" (click)="editarRegistro('paciente')">  Ver / editar paciente</a></span>
+                        <hr>
+                        <span>   <a class="nav-link azul my-hover es-atendido" (click)="editarRegistro('atendido')">  Atendido</a></span>
+                        <span>   <a class="nav-link azul my-hover es-cancelado" (click)="editarRegistro('cancelado')">  Cancelar</a></span>
+                        <span>   <a class="nav-link azul my-hover es-turno" (click)="editarRegistro('reasignar')">  Reasignar a medico</a></span>
+                        <hr>
+                        <span>   <a class=" text-info nav-link azul my-hover" (click)="editarRegistro('operacioncobro')">  Operacion de cobro</a></span>
+                        <hr>
+                        <span>   <a class=" text-warning nav-link azul my-hover" (click)="editarRegistro('comprobanteturno')">Comprobante de turno</a></span>
+                </p-overlayPanel>
+
+        </div>
+
+
+
+
+<p-dialog header="Observación" class="text-primary" [(visible)]="display" class="p-2" [baseZIndex]="10000" [responsive]="true">
+    <label>MOTIVO :  {{motivo}}</label>
+    <textarea [rows]="5" [cols]="30" pInputTextarea class="form-control form-control-sm col-md-12"[(ngModel)]="observacion"></textarea>
+
+    </p-dialog>

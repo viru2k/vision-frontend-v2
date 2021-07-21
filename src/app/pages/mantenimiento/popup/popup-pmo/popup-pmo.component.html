@@ -1,0 +1,43 @@
+
+  
+  <div class="row col-md-12 animated fadeIn slow" >
+        <div class="row ">
+                <div class="col-md-7" style="text-align:left">
+                    <button type="button" class="btn btn-info btn-md"  >Nuevo</button>
+                </div>
+                
+        <div class="col-md-5" style="text-align:right">                                
+                <button type="button" class="btn btn-success btn-md"  ><i class="fas fa-print"></i></button>
+        </div>
+        </div>
+      <p-table #dt class="pt-2" [columns]="cols"  [value]="elementos" selectionMode="single" [resizableColumns]="true"
+      [(selection)]="selectedItem" (onRowSelect)="onRowSelect($event)" [scrollable]="true" scrollHeight="400px" >
+   
+      <ng-template pTemplate="header" let-columns >
+
+              <tr>
+                  <th  *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn >
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                  </th>
+                  
+              </tr>
+              <tr>
+                  <th *ngFor="let col of columns" [ngSwitch]="col.field" >
+                      <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'codigo'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" autofocus>
+                      <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'descripcion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'complejidad'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                  </th>
+                
+              </tr>
+          </ng-template>
+  
+          <ng-template pTemplate="body" let-elementos>
+                      <tr [pSelectableRow]="elementos" >
+                          <td>{{elementos.codigo}}</td>
+                          <td>{{elementos.descripcion}}</td>
+                          <td>{{elementos.complejidad}}</td>                                                    
+                      </tr>
+          </ng-template>
+      </p-table>
+      </div>

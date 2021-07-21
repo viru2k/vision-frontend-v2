@@ -1,0 +1,105 @@
+
+
+    <div  >
+        <div class="mb-1">
+                    <label class="mr-1">Fecha estudio: </label>    
+            <p-calendar [inputStyle]="{'height':'29.1px'}"  [showTime]="true"  class="mr-2 " [(ngModel)]="fechaHoy"  (onSelect)="actualizarFechaHasta($event)" tabindex="0"   [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true">                       
+          </p-calendar> 
+          </div>
+        <form  [formGroup]="formPaciente">
+    <div class="  ml-2 row" >
+            <div class="form-group  mr-4 ">                                                 
+                      <div class=" input-group input-group-sm ">
+                          <label class=" mt-1 mr-2">Paciente :</label>  
+                          <input  (keyup.enter)="buscarPaciente()" class="form-control col-md-12 form-control-sm" formControlName="paciente_nombre" placeholder="Paciente"  />   
+                      
+                          <div class="input-group-append">
+                            <span class=" input-group-text form-control-sm">
+                              <a  (click)="buscarPaciente()">
+                                  <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                              </a>
+                          </span>
+                          </div>
+                      </div>       
+                    </div>
+              
+                <div class="form-group  mr-4 ">
+                <div class=" input-group input-group-sm ">         
+                  <label class="ml-3 mt-1">Edad :</label>                        
+                  <label class="ml-1 mt-1 text-info" >{{edad}}</label>  
+                </div>   
+              </div> 
+              <div class="form-group  mr-4 ">
+                  <div class=" input-group input-group-sm ">         
+                    <label class="ml-3 mt-1">DNI :</label>                        
+                    <label class="ml-1 mt-1 text-info" >{{formPaciente.value.dni}}</label>  
+                  </div>   
+                </div> 
+                <div class="form-group  mr-4 ">
+                    <div class=" input-group input-group-sm ">         
+                      <label class="ml-3 mt-1">Domicilio :</label>                        
+                      <label class="ml-1 mt-1 text-info" >{{formPaciente.value.domicilio}}</label>  
+                    </div>   
+                  </div> 
+              <div class="form-group  mr-4 ">
+                <div class=" input-group input-group-sm ">           
+                    <label class="ml-3 mt-1">Obra social :</label>                                               
+                    <label class="ml-1 mt-1 text-info" >{{formPaciente.value.obra_social_nombre}}</label> 
+                        
+                </div>     
+              </div>
+              <div class="form-group  mr-4 ">                                                 
+                <div class=" input-group input-group-sm ">
+                    <label class="ml-3 mt-1">Número :</label>  
+                    <label class="ml-1 mt-1  text-info">{{formPaciente.value.numero_afiliado}}/{{formPaciente.value.barra_afiliado}}</label> 
+                    <label class="ml-3 mt-1 ">Plan :</label>  
+                    <label class="ml-1 mt-1 text-info" >{{formPaciente.value.plan}}</label>  
+                </div>    
+                
+              </div>
+            </div>
+            <div class="  ml-2 row" >
+                <div class="form-group  mr-4 ">                                                 
+                        <div class=" input-group input-group-sm ">
+                            <label class=" mt-1 mr-2">Médico :</label>  
+                            <input  (keyup.enter)="buscarMedico()" class="form-control col-md-12 form-control-sm" formControlName="medico_nombre" placeholder="Médico"  />   
+                        
+                            <div class="input-group-append">
+                              <span class=" input-group-text form-control-sm">
+                                <a  (click)="buscarMedico()">
+                                    <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                </a>
+                            </span>
+                            </div>
+                        </div>       
+                      </div>
+
+                      <div>
+                        <p-dropdown class="mt-1 mb-2 col-12" [options]="estudiosTexto" formControlName="selectedEstudio" optionLabel="name" ></p-dropdown> 
+                      </div>
+                  
+            </div>
+            <div class="  ml-2 row" >
+                <div class="form-group  mr-4 ">                                                 
+                        <div class=" input-group input-group-sm ">
+                            <label class=" mt-1 mr-2">Médico :</label>  
+                            <input   class="form-control col-md-12 form-control-sm" formControlName="SINTOMAS_SIGNOS" placeholder="Observaciones"  />                           
+                        </div>       
+                      </div>                     
+                  
+            </div>
+          </form> 
+         
+        </div>
+
+<label>Cargar estudio</label>
+
+<p-fileUpload name="images[]" url=" {{url}}api/multiuploads/estudios" (onUpload)="onUpload($event)" chooseLabel="Seleccionar archivo"  uploadLabel="Subir"	cancelLabel="Cancelar"
+        multiple="multiple" accept="image/*" >
+    
+</p-fileUpload>
+<label>Cargar estudio pdf</label>
+<p-fileUpload name="images[]" url=" {{url}}api/multiuploads/estudios" (onUpload)="onUpload($event)" chooseLabel="Seleccionar archivo"  uploadLabel="Subir"	cancelLabel="Cancelar"
+        multiple="multiple"  >
+    
+</p-fileUpload>

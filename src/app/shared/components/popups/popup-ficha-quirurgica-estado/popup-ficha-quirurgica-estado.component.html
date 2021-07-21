@@ -1,0 +1,54 @@
+
+<div >
+  <app-loading *ngIf="loading"> </app-loading> 
+ 
+</div>
+
+<div class="row" role="toolbar" aria-label="Toolbar with button groups">
+  <div  class="input-group input-group-sm ml-2">
+          <form  [formGroup]="DateForm">
+                  <div class="btn-group " role="group">
+                          <span class="pr-1 pt-1"><h6>Internación:</h6></span>
+              <p-calendar [inputStyle]="{'height':'29.1px'}"  [showTime]="true"   class="mr-2 ml-2" formControlName="fecha_internacion"  (onSelect)="actualizarFechaInternacion($event)" tabindex="0"   [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true">
+              <ng-template pTemplate="date" let-date>
+                      <span    style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                  </ng-template> 
+              </p-calendar>
+              <span class="pr-1 pt-1"><h6>Inicio:</h6></span>
+              <p-calendar [inputStyle]="{'height':'29.1px'}"  [showTime]="true"  class="mr-2 " formControlName="fecha_inicio_acto_quirurgico"  (onSelect)="actualizarFechaInicio($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true">
+                  <ng-template pTemplate="date" let-date>
+                      <span  inputStyle="{'height':'29.5px'}"  style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                  </ng-template> 
+              </p-calendar>               
+                          
+              <span class="pr-1 pt-1"><h6>Fin:</h6></span>
+              <p-calendar [inputStyle]="{'height':'29.1px'}" [showTime]="true"   class="mr-2 " formControlName="fecha_fin_acto_quirurgico"  (onSelect)="actualizarFechaFin($event)" tabindex="0"   [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true">
+              <ng-template pTemplate="date" let-date>
+                      <span    style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                  </ng-template> 
+              </p-calendar>
+              <span class="pr-1 pt-1"><h6>Alta:</h6></span>
+              <p-calendar [inputStyle]="{'height':'29.1px'}"  [showTime]="true"  class="mr-2 " formControlName="fecha_alta"  (onSelect)="actualizarFechaAlta($event)" tabindex="0"   [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true">
+                  <ng-template pTemplate="date" let-date>
+                      <span  inputStyle="{'height':'29.5px'}"  style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                  </ng-template> 
+              </p-calendar>               
+                          
+              
+          </div>
+          
+      </form>   
+    </div>   
+  </div>
+    <div class="row mt-2 ml-2 mr-2">
+            <div class="ml-2 col-6">  
+              <input type="text" [(ngModel)]="observacion_cirugia"  class="form-control text-md " placeholder="Observación" > 
+            </div>
+            <div class="ml-2 ">
+                <p-dropdown [options]="estadoCirugia" [(ngModel)]="selectedCirugia" optionLabel="name" ></p-dropdown>
+                <!-- <p>Selected Car: {{selectedForma || 'none'}}</p> -->
+          </div>
+      <div class="ml-2"> <button type="button" class="btn btn-info btn-md "  (click)="guardarDatos()"  >Modificar cirugia</button></div>
+    </div>    
+  
+

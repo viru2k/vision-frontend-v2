@@ -1,0 +1,9 @@
+ 
+
+<a routerLink="chat" *ngIf="nuevo" (click)="chequeado()" class=" pointer texto-monserrat icon-color-user-setting" >
+    <i class="far fa-envelope fa-lg   icon-color-clinica-setting"></i>  
+</a>
+
+<a routerLink="chat" *ngIf="!nuevo" (click)="chequeado()" class=" pointer texto-monserrat icon-color-user-setting" >
+    <i class="far fa-envelope-open fa-lg icon-color-quit"></i>  
+</a>

@@ -1,0 +1,65 @@
+
+            <form class="col-md-12"  [formGroup]="updateDataForm" (ngSubmit)="actualizarDatos()">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group ">
+                                <label  >Nombre</label>
+                                <input class="form-control col-md-12 form-control-sm" formControlName="nombre"   />
+                                <div *ngIf="updateDataForm.controls.nombre.errors?.required && updateDataForm.controls.nombre.touched" class="error">
+                                        * Este campo es requerido
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label  >Descripcion</label>
+                                <input class="form-control col-md-12 form-control-sm" formControlName="descripcion"   />
+                                <div *ngIf="updateDataForm.controls.descripcion.errors?.required && updateDataForm.controls.descripcion.touched" class="error">
+                                                * Este campo es requerido
+                                </div>
+                        </div>
+
+
+                           <div class="form-group ">
+                <div class="row">
+                  <div >
+                    <label  >Entidad a facturar</label>
+                  </div> 
+                  <div class=" input-group input-group-sm mb-3">
+                      <input  (keyup.enter)="editarEntidad()" class="form-control col-md-12 form-control-sm" formControlName="entidad_nombre"  />   
+                      <div *ngIf="updateDataForm.controls.entidad_nombre.errors?.required && updateDataForm.controls.entidad_nombre.touched" class="error">
+                        * Este campo es requerido
+                </div>
+                      <div class="input-group-append">
+                        <span class="input-group input-group-text form-control-sm">
+                          <a  (click)="editarEntidad()">
+                                <img class="pointer float-right" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px" >
+                          </a>
+                      </span>
+                      </div>
+                  </div>    
+            </div>
+          </div>
+
+           
+
+                        <div class="form-group ui-g-12">
+                            <label  >Habilitada</label>
+                            <div ><p-radioButton name="groupname" formControlName="es_habilitada"   value="S" label="Si"  inputId="opt1"></p-radioButton>
+                                <p-radioButton name="groupname"  formControlName="es_habilitada"   value="N" label="No"  inputId="opt2"></p-radioButton></div></div>
+                            <div >
+                    </div>
+                    <div *ngIf="updateDataForm.controls.es_habilitada.errors?.required && updateDataForm.controls.es_habilitada.touched" class="error">
+                                    * Este campo es requerido
+                    </div>
+                  
+            </div>
+         
+        </div>
+             
+            </form>
+            <p-footer>
+                    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                            <button  [disabled]="!updateDataForm.valid" [formGroup]="updateDataForm" class="btn btn-primary" type="submit" (click)="actualizarDatos()" >Guardar</button>
+                         
+                    </div>
+                </p-footer>
+       

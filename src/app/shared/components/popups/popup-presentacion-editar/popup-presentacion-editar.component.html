@@ -1,0 +1,100 @@
+
+            <form class="col-md-12"  [formGroup]="updateDataForm" >
+              <div class="row">
+                  <div class="col-md-6">
+
+                      <div class="form-group ">
+                          <div >
+                              <label  >Obra Social</label>
+                            </div> 
+                          <div class=" input-group input-group-sm mb-3">
+                              <input (keyup.enter)="buscarObraSocial()" placeholder="Buscar obra social" class="form-control col-md-12 form-control-sm" formControlName="obra_social_nombre"   />                  
+                              <div class="input-group-append">
+                                <span class="input-group input-group-text form-control-sm">
+                                  <a  (click)="buscarObraSocial()">
+                                      <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                  </a>
+                              </span>
+                              </div>
+                          </div>    
+
+
+                 <!--      <div class="form-group ">
+                          <div >
+                              <label  >Médico</label>
+                            </div> 
+                          <div class=" input-group input-group-sm mb-3">
+                              <input (keyup.enter)="editarMedico()" placeholder="Buscar paciente" class="form-control col-md-12 form-control-sm" formControlName="medico_nombre"   />                  
+                              <div class="input-group-append">
+                                <span class="input-group input-group-text form-control-sm">
+                                  <a  (click)="buscarPaciente()">
+                                      <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                  </a>
+                              </span>
+                              </div>
+                             
+                              
+                          </div>   
+                          <div class="mt-1">
+                            <button    class="btn btn-primary btn-sm"  (click)="editarMedico()" >Editar médico</button>                        
+                          </div>                    
+                      </div> -->
+                    </div>
+                  
+                  </div>
+
+                     
+                     
+                  <div class="col-md-6">                      
+                          <div class="form-group">
+                              <div >
+                              <label  >Fecha desde</label>
+                            </div>                               
+                              
+                              <p-calendar formControlName="fecha_desde"   (onSelect)="actualizarFechaDesde($event)" tabindex="0"   [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true"></p-calendar>
+                          </div>
+
+                          <div class="form-group">
+                              <div >
+                              <label  >Fecha hasta</label>
+                            </div>                               
+                              
+                              <p-calendar formControlName="fecha_hasta"   (onSelect)="actualizarFechaHasta($event)" tabindex="0"   [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true"></p-calendar>
+                          </div>
+
+                          <div class="form-group">
+                              <div >
+                              <label  >Periodo</label>
+                            </div>                               
+                              
+                              <p-calendar formControlName="numero"   (onSelect)="actualizarNumero($event)" tabindex="0"    [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true"></p-calendar>
+                          </div>
+
+
+                      <div class="form-group">
+                          <label  >Nivel</label>
+                          <input   class="form-control col-md-12 form-control-sm" formControlName="nivel"   />
+                      </div>
+
+                     
+                      <div class="form-group">
+                          <label  >Total </label>
+                          <input class="form-control col-md-12 form-control-sm" formControlName="total"   />
+                      </div>
+
+                      <div class="form-group">
+                          <label  >Cantidad ordenes</label>
+                          <input class="form-control col-md-12 form-control-sm" formControlName="cant_orden"   />
+                      </div>
+
+         
+                    </div>
+                 </div>
+          </form>
+          <p-footer>
+                  <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                          <button    class="btn btn-primary" type="submit" (click)="actualizarDatos()" >Actualizar</button>                        
+                  </div>
+              </p-footer>
+     
+       

@@ -1,0 +1,22 @@
+
+            <form class="col-md-12"  [formGroup]="updateDataForm" >
+            
+                
+      <div class="form-group">
+        <label  >Observación</label>
+        <textarea class="form-control col-md-12 form-control-sm" formControlName="quirofano_observacion" rows="3" cols="25" pInputTextarea autoResize="autoResize"></textarea> 
+        
+    </div>        
+    <label  >Observar cirugia</label>
+    <div class="row pb-5">
+      <div class="col-4"><p-radioButton name="groupname1" formControlName="tiene_observacion"   value="SI" label="SI"  inputId="opt12"></p-radioButton></div>
+      <div class="col-4"><p-radioButton name="groupname1"  formControlName="tiene_observacion"   value="NO" label="NO"  inputId="opt22"></p-radioButton></div>
+    </div>    
+          </form>
+          <p-footer>
+                  <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                          <button    class="btn btn-primary" type="submit" (click)="actualizarDatos()" >Actualizar</button>                        
+                  </div>
+              </p-footer>
+     
+       

@@ -1,0 +1,90 @@
+
+<div >
+  <app-loading *ngIf="loading"> </app-loading> 
+ 
+</div>
+
+
+
+    <div class="row ml-3">
+        <label class="mr-2 mt-2">Alícuota</label>
+        <p-dropdown   [options]="elementosAlicuota"  [(ngModel)]="elementoAlicuota"  optionLabel="descripcion"></p-dropdown>
+    </div>
+
+  
+  <div class="row m-3">
+  <p-table  #dt class="pt-2"  tableStyleClass="prime-table" selectionMode="single" [columns]="cols" [value]="elementos"   [(selection)]="selecteditems" columnResizeMode="expand" [responsive]="true"
+  scrollHeight="300px" [scrollable]="true"  (onFilter)="filtered($event)"  >
+ 
+
+             <ng-template pTemplate="header" let-columns >
+            
+                        <tr >
+                             
+                          <th  *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
+                              {{col.header}}
+                              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                          </th> 
+                          <th style="width: 3em">
+                                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                          </th>
+                      </tr> 
+                      <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field"  >
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'obra_social_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'entidad_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input style=" font-size: 12px;"  class="form-control col-md-12 form-control-sm" *ngSwitchCase="'numero'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'nivel'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'fecha_desde'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'fecha_hasta'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'cant_orden'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'total'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                       
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'medico_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                          
+                      </th>
+                      <th></th>
+                  </tr>
+              </ng-template>
+            
+      <ng-template pTemplate="body" let-elementos  >
+          <tr style="height:28px"  >
+                 
+                 
+                  <td style="width: 7%">{{elementos.id}}</td>
+                  <td style="width: 20%">{{elementos.obra_social_nombre}}</td>
+                  <td style="width: 10%">{{elementos.entidad_nombre}}</td>
+                  <td style="width: 8%">{{elementos.numero |date:'dd/MM/yyyy'}}</td>
+                  <td style="width: 10%">{{elementos.nivel}}</td>
+                  <td style="width: 10%">{{elementos.fecha_desde |date:'dd/MM/yyyy'}}</td>
+                  <td style="width: 10%">{{elementos.fecha_hasta |date:'dd/MM/yyyy'}}</td>                                                    
+                  <td style="width: 10%">{{elementos.cant_orden}}</td>                            
+                  <td style="width: 20%">{{elementos.total}}</td>  
+                  <td style="width: 15%">{{elementos.medico_nombre}}</td>     
+               
+                <td style="width: 20%">{{elementos.total_factura}}</td>                                    
+                  <td style="width: 3em">
+                          <p-tableCheckbox [value]="elementos"></p-tableCheckbox>
+                      </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+          <div class="row float-right pr-2">
+              <h6 class="text-info pr-2">CANTIDAD : {{cantidad |  number : '1.0-0' }}  - </h6>      
+              <h6 class="text-info"> TOTAL : {{total_facturado |  number : '1.2-2' }} $</h6>
+          </div>
+              <ul> </ul>
+          </ng-template> 
+  </p-table>
+</div>
+
+
+<p-overlayPanel #op [showTransitionOptions]="'400ms'" [hideTransitionOptions]="'300ms'"  [dismissable]="true" >                          
+<!--     <span>   <a class="nav-link azul text-info  my-hover" (click)="editarRegistro(selecteditems)">Modificar registro</a></span> -->
+    <span>   <a class="nav-link azul text-info  my-hover" (click)="desafectarPresentacion()">Desafectar registro</a></span>
+    <span> <hr></span>
+    <!-- <span>   <a class="nav-link azul text-info my-hover" (click)="verDetalle(selecteditems)">Ver detalle</a></span> -->
+  </p-overlayPanel>  
+
+  
+  <div class="row"> <button class="btn btn-info btn-block" (click)="calcularRenglon()">Agregar</button>  </div> 
+ 

@@ -1,0 +1,8 @@
+<div class="d-flex justify-content-center">
+    <div *ngIf="this.pdfSrc==='application/pdf'" >
+      <h2>ABRIENDO ARCHIVO PDF EN UNA NUEVA VENTANA</h2>
+    </div>
+  <div *ngIf="images !==[]" >
+<p-galleria [images]="images" *ngIf="images !==[]" [autoPlay]="false" panelWidth="600" panelHeight="600" [showCaption]="true" styleclass="ui-panel-image"></p-galleria>
+</div>
+</div>

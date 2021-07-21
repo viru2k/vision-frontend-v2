@@ -1,0 +1,229 @@
+     
+            <form class="col-12"  [formGroup]="updateDataForm">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group ">
+                                <label  >Apellido</label>
+                                <input class="form-control col-md-12 form-control-sm" formControlName="apellido"  autofocus  />
+                                <div *ngIf="updateDataForm.controls['apellido'].errors?.required && updateDataForm.controls['apellido'].touched" class="alert alert-warning">
+                                        * Este campo es requerido
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label  >Nombre</label>
+                                <input class="form-control col-md-12 form-control-sm" formControlName="nombre"   />
+                                <div *ngIf="updateDataForm.controls['nombre'].errors?.required && updateDataForm.controls['nombre'].touched" class="alert alert-warning">
+                                                * Este campo es requerido
+                                </div>
+                        </div>                   
+                        <div class="form-group">
+                                <label  >DNI</label>
+                                <input class="form-control col-md-12 form-control-sm" formControlName="dni" maxlength="8" minlength="6"  />
+                             
+                                <div *ngIf="updateDataForm.controls['dni'].errors?.required && updateDataForm.controls['dni'].touched" class="alert alert-warning">
+                                  * Este campo es requerido
+                               </div>
+                        </div>
+                     
+                        <div class="form-group ">
+                                <label  >Sexo</label>
+                                <div class="row">
+  
+                                    <div class="form-check form-check-radio">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="sexo" formControlName="sexo"   value="M"    >
+                                            <span class="form-check-sign"></span>
+                                            Masculino
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-radio">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio"  name="sexo"  formControlName="sexo"    id="no" value="F">
+                                            <span class="form-check-sign"></span>
+                                            Femenino
+                                        </label>
+                                    </div>
+                                   
+                                </div>
+                                <div *ngIf="updateDataForm.controls['sexo'].errors?.required && updateDataForm.controls['sexo'].touched" class="alert alert-warning">
+                                    * Este campo es requerido
+                                 </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <div >
+                            <label  >Fecha de nacimiento</label>
+                          </div>                               
+                            <p-calendar formControlName="fecha_nacimiento" [locale]="es" dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2100" ></p-calendar>
+                            <div *ngIf="updateDataForm.controls['fecha_nacimiento'].errors?.required && updateDataForm.controls['fecha_nacimiento'].touched" class="alert alert-warning">
+                                * Este campo es requerido
+                            </div>
+                    </div>
+              
+            </div>
+  
+            <div class="col-4">
+
+                <div class="form-group col-sm-12 col-xs-12">
+                    <div >
+                    <label  >Edad</label>
+                  </div>                               
+                  <h5 class="text-info" >{{this.config.data.fecha_nacimiento}} años</h5>
+            </div>
+  
+                             <div class="form-group">
+                                 <label >Domicilio</label>
+                                 <input class="form-control col-md-12 form-control-sm" formControlName="domicilio"    />
+                                 <div *ngIf="updateDataForm.controls['domicilio'].errors?.required && updateDataForm['domicilio'].domicilio.touched" class="alert alert-warning">
+                                                 * Este campo es requerido
+                                 </div>
+                           </div>
+  
+                          <div class="form-group">
+                                <label  >Ciudad</label>
+                                <input class="form-control col-md-12 form-control-sm" formControlName="ciudad"    />
+                                <div *ngIf="updateDataForm.controls['ciudad'].errors?.required && updateDataForm.controls['ciudad'].touched" class="alert alert-warning">
+                                                * Este campo es requerido
+                                </div>
+                        </div>
+                     
+                       
+                       
+                       
+                        <div class="form-group ">
+                          <div >
+                              <label  >Obra social</label>
+                            </div> 
+  
+                            <div class=" d-flex align-items-center">
+                                  <button class="btn btn-primary btn-sm btn-round  mr-2" type="button" (click)="buscarObraSocial()">
+                                      <i class="fas fa-search"></i> Buscar
+                                  </button>
+       
+                               <label class="mt-2 mr-2">{{updateDataForm.value.obra_social_nombre}}</label>  
+                            </div>  
+                      </div>
+                     
+                           <div class="form-group ">
+                                  <div >
+                                      <label  >Coseguro</label>
+                                    </div> 
+                                  <div class=" d-flex align-items-center">
+                                                          
+                                     
+                                          <button class="btn btn-primary btn-sm btn-round mr-2" type="button" (click)="buscarCoseguro()">
+                                              <i class="fas fa-search"></i> Buscar
+                                          </button>
+                                          <label class="mt-2 mr-2">{{updateDataForm.value.coseguro_nombre}}</label>      
+                                  </div>  
+                              </div>
+                              <div class="form-group">
+                                  <label  >Número afiliado / ID</label>
+                                  <input class="form-control col-md-12 form-control-sm" formControlName="numero_afiliado"    />
+                                  <div *ngIf="updateDataForm.controls['numero_afiliado'].errors?.required && updateDataForm.controls['numero_afiliado'].touched" class="alert alert-warning">
+                                                  * Este campo es requerido
+                                  </div>
+                               </div>
+  
+                               <div class="form-group">
+                                  <label  >Barra</label>
+                                  <input class="form-control col-md-12 form-control-sm" formControlName="barra_afiliado"    />
+                                  <div *ngIf="updateDataForm.controls['barra_afiliado'].errors?.required && updateDataForm.controls['barra_afiliado'].touched" class="alert alert-warning">
+                                                  * Este campo es requerido
+                                  </div>
+                               </div>
+  
+                              
+                  </div>
+                
+  
+            <div class="col-4">
+                  <div class="form-group">
+                          <label  >Plan</label>
+                          <input class="form-control col-md-12 form-control-sm" formControlName="plan"    />
+                          <div *ngIf="updateDataForm.controls['plan'].errors?.required && updateDataForm.controls['plan'].touched" class="alert alert-warning">
+                                          * Este campo es requerido
+                          </div>
+                       </div>
+  
+                       <div class="form-group ">
+                          <label  >Adherente / Grav. - Obligatoria / No grav.</label>
+                          <div class="row">
+                              <div class="form-check form-check-radio">
+                                  <label class="form-check-label">
+                                      <input class="form-check-input" type="radio" name="gravado_adherente" formControlName="gravado_adherente"   value="A"   id="si" >
+                                      <span class="form-check-sign"></span>
+                                      Adherente / Grav.
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-radio">
+                                  <label class="form-check-label">
+                                      <input class="form-check-input" type="radio"  name="gravado_adherente"  formControlName="gravado_adherente"    id="obligatorio" value="O" >
+                                      <span class="form-check-sign"></span>
+                                      Obligatoria / No grav.
+                                  </label>
+                              </div>                       
+                          </div>
+                          <div *ngIf="updateDataForm.controls['gravado_adherente'].errors?.required && updateDataForm.controls['gravado_adherente'].touched" class="alert alert-warning">
+                              * Este campo es requerido
+                           </div>
+                      </div>
+                           <div class="form-group">
+                               <label  >E-mail</label>
+                               <input class="form-control col-md-12 form-control-sm" formControlName="email"    />
+                               <div *ngIf="updateDataForm.controls['email'].errors?.required && updateDataForm.controls['email'].touched" class="alert alert-warning">
+                                               * Este campo es requerido
+                               </div>
+                            </div>
+                      <div class="form-group ">
+                                  <div>
+                                     <label  >Tiene WhatsApp</label>
+                                  </div>
+                          <div class="row">
+                           
+                         <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="tiene_whatsapp" formControlName="tiene_whatsapp"   value="true"   id="si" >
+                                <span class="form-check-sign"></span>
+                                SI
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio"  name="tiene_whatsapp"  formControlName="tiene_whatsapp"    id="no" value="false">
+                                <span class="form-check-sign"></span>
+                                NO
+                            </label>
+                        </div>
+                      </div>
+                      <div *ngIf="updateDataForm.controls['tiene_whatsapp'].errors?.required && updateDataForm.controls['tiene_whatsapp'].touched" class="alert alert-warning">
+                          * Este campo es requerido
+                       </div>
+                      </div>        
+  
+                      <div class="form-group">
+                          <label  >Telefono celular</label>
+                          <input class="form-control col-md-12 form-control-sm" formControlName="telefono_cel"    />
+                          <div *ngIf="updateDataForm.controls['telefono_cel'].errors?.required && updateDataForm.controls['telefono_cel'].touched" class="alert alert-warning">
+                                          * Este campo es requerido
+                          </div>
+                      </div>
+                      <div class="form-group">
+                         <label  >Telefono fijo</label>
+                         <input class="form-control col-md-12 form-control-sm" formControlName="telefono_fijo"    />
+                         <div *ngIf="updateDataForm.controls['telefono_fijo'].errors?.required && updateDataForm.controls['telefono_fijo'].touched" class="alert alert-warning">
+                                         * Este campo es requerido
+                         </div>
+                     </div>
+                  
+            </div>
+        </div>
+             
+            </form>
+            <p-footer>
+                    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                            <button  [disabled]="!updateDataForm.valid" [formGroup]="updateDataForm" class="btn btn-info texto-roboto" type="submit" (click)="guardarDatos()" >Guardar</button>
+                            
+                    </div>
+                </p-footer>
+       

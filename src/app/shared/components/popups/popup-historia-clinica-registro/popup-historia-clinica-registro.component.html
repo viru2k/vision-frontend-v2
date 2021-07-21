@@ -1,0 +1,77 @@
+<div>
+    <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <label class="pt-1  form-control-label col-2">MC: </label>
+                <textarea class="pt-1 col-10" [(ngModel)]="elemento.MC" rows="5" cols="30" pInputTextarea autofocus></textarea>
+              </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                  <label class="pt-1  form-control-label col-2">AEA: </label>
+                  <textarea class="pt-1 col-10" [(ngModel)]="elemento.AEA" rows="5" cols="30" pInputTextarea></textarea>  
+            </div>          
+            </div>
+          </div>
+          <div class="row mt-2">
+              <div class="col-6">
+                <div class="row">
+                  <label class="pt-1  form-control-label col-2">APP: </label>
+                  <textarea class="pt-1 col-10" [(ngModel)]="elemento.APP" rows="5" cols="30" pInputTextarea></textarea>
+                </div>  
+              </div>
+              <div class="col-6">
+                  <div class="row">
+                    <label class="pt-1  form-control-label col-2">AF: </label>
+                    <textarea class="pt-1 col-10" [(ngModel)]="elemento.AF" rows="5" cols="30" pInputTextarea></textarea>        
+                  </div> 
+               </div>
+          </div>   
+          <div class="row mt-2">
+              <div class="col-6">
+                  <div class="row">
+                     <label class="pt-1  form-control-label col-2">BIO: </label>
+                     <textarea class="pt-1 col-10" [(ngModel)]="elemento.BIO" rows="5" cols="30" pInputTextarea></textarea>
+                  </div>
+              </div>
+              <div class="col-6">
+                <div class="row">
+                     <label class="pt-1  form-control-label col-2">COMENTARIO: </label>
+                     <textarea class="pt-1 col-10"  pInputTextarea rows="5" cols="30" [(ngModel)]="elemento.COMENTARIO"></textarea>
+                </div>   
+               </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-6">
+              <div class="row">
+                 <label class="pt-1  form-control-label col-2">FO: </label>
+                 <textarea class="pt-1 col-10" [(ngModel)]="elemento.FO" rows="5" cols="30" pInputTextarea></textarea>
+              </div>
+          </div>
+          <div class="col-6">
+            <div class="row">
+               <label class="pt-1  form-control-label col-2">SINTOMAS: </label>
+               <textarea class="pt-1 col-10" [(ngModel)]="elemento.SINTOMAS" rows="5" cols="30" pInputTextarea></textarea>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="card mt-2">
+    <div class="card-body">
+<div class="row">
+    <label class="pt-1  form-control-label col-1">PIO OD : </label>
+    <input class=" form-control col-1 form-control-sm ml-2 mr-2" [(ngModel)]="elemento.PIO_OD">
+    <label class="pt-1  form-control-label col-1">PIO OI : </label>
+    <input class=" form-control col-1 form-control-sm ml-2 mr-2" [(ngModel)]="elemento.PIO_OI">
+    <label class="pt-1  form-control-label col-1">OBS. LENTES : </label>
+    <input class=" form-control col-3  text-sm form-control-sm ml-2 mr-2" [(ngModel)]="elemento.OBS_LENTES">
+    <label class="pt-1  form-control-label col-1">OBS. OTROS : </label>
+    <input class=" form-control col-2 form-control-sm ml-2 " [(ngModel)]="elemento.OBSERVACIO">
+</div>
+
+</div>
+</div>

@@ -1,0 +1,60 @@
+
+            <form class="col-md-12"  [formGroup]="updateDataForm">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group ">
+                                <label  >Articulo</label>
+                                <input class="form-control col-md-12 form-control-sm" formControlName="descripcion"   />
+                                
+                        </div>
+                        <div class="form-group">
+                                <label  >importe</label>
+                                <input class="form-control col-md-12 form-control-sm" formControlName="importe"   />
+                               
+                        </div>
+
+
+                           <div class="form-group ">
+                <div class="form-group ui-g-12">
+                  <div >
+                    <label  >Cantidad</label>
+                  </div> 
+                  <div class=" input-group input-group-sm mb-3">
+                      <input  class="form-control col-md-12 form-control-sm" formControlName="cantidad"  />   
+                     
+                  </div>    
+            </div>
+
+            <div class="form-group">
+              <label  >Unidad</label>
+              <input class="form-control col-md-12 form-control-sm" formControlName="unidad"   />
+             
+        </div>
+          </div>
+        
+           
+
+                        <div class="form-group ui-g-12">
+                            <label  >Tipo</label>
+                            <div class=""><p-radioButton class="mr-2" name="groupname" formControlName="tipo_movimiento"   value="INGRESO" label="Ingreso"  inputId="opt1"></p-radioButton>
+                                <p-radioButton name="groupname"  formControlName="tipo_movimiento"   value="EGRESO" label="Egreso"  inputId="opt2"></p-radioButton></div></div>
+                            <div >
+                    </div>
+                  
+                  
+            </div>
+         
+        </div>
+             
+            </form>
+            <div class="form-group ui-g-12">
+                <label  >Alícuota</label>
+              <p-dropdown class=" mr-2  col-3" [style]="{'height':'35.1px'}" [options]="elementosAlicuota" [(ngModel)]="elementoAlicuota"  optionLabel="descripcion" placeholder="Categoria"></p-dropdown>
+            </div>
+            <p-footer>
+                    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                            <button  [disabled]="!updateDataForm.valid" [formGroup]="updateDataForm" class="btn btn-primary" type="submit" (click)="guardar()" >Guardar</button>
+                         
+                    </div>
+                </p-footer>
+       

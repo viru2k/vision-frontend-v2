@@ -1,0 +1,155 @@
+
+<div >
+  <app-loading *ngIf="loading"> </app-loading> 
+ 
+</div>
+<p-toast (life)="100" styleClass="custom-toast" [style]="{marginTop: '100px'}"></p-toast>
+
+  <div class="row m-2" role="toolbar" aria-label="Toolbar with button groups">
+      <div  class="input-group input-group-sm d-flex align-items-center"> 
+          <p-dropdown [options]="impresiones" [(ngModel)]="selectedImpresion" optionLabel="name" ></p-dropdown>
+          <button    class="ml-2 btn  btn-primary btn-md float-right mr-2 " (click)="imprimir()" >Generar</button> 
+          <button    class="ml-2 btn  btn-success btn-md float-right mr-2 " (click)="loadlist()" ><i class="fas fa-sync"></i></button> 
+              <form  [formGroup]="DateForm">
+
+              </form>            
+      </div>
+  </div>
+<hr>
+  <div class="row ml-1 mt-2" role="toolbar" aria-label="Toolbar with button groups">
+    <div  class="input-group input-group-sm ">
+            <form  [formGroup]="DateForm">
+            <div class="btn-group mr-1 d-flex align-items-center" role="group">
+                    <span class="pr-1 pt-1"><h6>Desde:</h6></span>
+                    <p-calendar [inputStyle]="{'height':'29.1px'}" [showTime]="true"   class="mr-2 " formControlName="fecha_desde"  (onSelect)="actualizarFechaDesde($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true">
+                      <ng-template pTemplate="date" let-date>
+                              <span    style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                          </ng-template> 
+                      </p-calendar>
+                      <span class="pr-1 pt-1"><h6>Hasta:</h6></span>
+                      <p-calendar [inputStyle]="{'height':'29.1px'}"  [showTime]="true"  class="mr-2 " formControlName="fecha_hasta"  (onSelect)="actualizarFechaHasta($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true">
+                          <ng-template pTemplate="date" let-date>
+                              <span  inputStyle="{'height':'29.5px'}"  style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                          </ng-template> 
+                      </p-calendar>       
+                        <div class="ml-2 mr-2 row mt-3">                         
+                          <div class=" input-group input-group-sm ">
+                              <input  (keyup.enter)="buscarObraSocial()" class="form-control col-md-12 form-control-sm" formControlName="obra_social_nombre" placeholder="Obra social" />   
+                            
+                              <div class="input-group-append">
+                                <span class="input-group input-group-text form-control-sm">
+                                  <a  (click)="buscarObraSocial()">
+                                      <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                  </a>
+                              </span>
+                              </div>
+                          </div>    
+                    </div>                                          
+                      <div class=" ml-2 row">                         
+                         <div class="ml-2"><button    class="btn  btn-danger btn-sm float-right  pr-2" (click)="actualizarRegistros()" >Actualizar valores de convenio</button>   </div>  
+                         <div class="ml-2"><button    class="btn  btn-info btn-sm float-right  pr-2" (click)="editarDistribucion()" >Editar distribución</button>   </div>   
+                         <div class="ml-5"><button    class="btn  btn-danger btn-sm float-right  pr-2" (click)="clonarDistribucion()" >Clonar distribución</button>   </div>                                                                    
+                        </div>    
+                        
+                      
+                           <div class="form-group ">
+               
+          </div>  
+    </div>   
+    
+            </form>            
+          
+    </div>    
+</div>
+<div class=" ml-2 row d-flex align-items-center">  
+        <label class="ml-1 mr-2 mt-1"> Acciones sobre D.O.S : </label>
+        <div class="ml-2"><button    class="btn  btn-danger btn-sm float-right  pr-2" (click)="actualizarRegistros()" >Actualizar valores (Registros seleccionados)</button>   </div>                                   
+      </div>
+  <div class="row ml-2 mr-2">
+ 
+  <p-table  #dt class=""  tableStyleClass="prime-table" selectionMode="single" [columns]="cols" [value]="elementos"   [(selection)]="selecteditems" columnResizeMode="expand" [responsive]="true"
+    scrollHeight="500px" [scrollable]="true"  (onFilter)="filtered($event)" [loading]="loading" loadingIcon="fas fa-spinner fa-2x icon-color-green" >
+ 
+
+  <ng-template pTemplate="caption">
+      
+    <div class="d-flex justify-content-end">
+     <div>  <button    class="ml-2  btn  btn-excel btn-sm float-right "  (click)="exportarExcelRegistro()" > <i class="fa fa-file-excel-o  mr-1" aria-hidden="true"> </i> Exportar a excel</button></div>       
+    </div>
+</ng-template>
+
+             <ng-template pTemplate="header" let-columns >
+            
+                        <tr >
+                             
+                          <th  *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
+                              {{col.header}}
+                              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                          </th> 
+                          <th style="width: 3em">
+                                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                          </th>
+                      </tr> 
+                      <tr>
+                      <th *ngFor="let col of columns" [ngSwitch]="col.field"  >
+                        <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_obra_social_nombre" appendTo="body" defaultLabel="Obra social"	 *ngIf='col.field =="obra_social_nombre"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                          <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_entidad_nombre" appendTo="body" defaultLabel="Entidad"	 *ngIf='col.field =="entidad_nombre"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                          <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_nivel" appendTo="body" defaultLabel="Nivel"	 *ngIf='col.field =="nivel"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                          <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_numero" appendTo="body" defaultLabel="Periodo"	 *ngIf='col.field =="numero"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                          <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_fecha_desde" appendTo="body" defaultLabel="Desde"	 *ngIf='col.field =="fecha_desde"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                          <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_fecha_hasta" appendTo="body" defaultLabel="Hasta"	 *ngIf='col.field =="fecha_hasta"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'cant_orden'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'total'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                       
+                          <p-multiSelect [style]="{'height':'28px', 'width': '100%', 'font-size': '10px'}" [options]="_medico_nombre" appendTo="body" defaultLabel="Médico"	 *ngIf='col.field =="medico_nombre"' (onChange)="dt.filter($event.value,col.field,'in')"></p-multiSelect>                                                  
+                          <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'nombreyapellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      </th>
+                      <th></th>
+                  </tr>
+              </ng-template>
+            
+      <ng-template pTemplate="body" let-elementos  >
+          <tr style="height:28px"  >
+                 
+                  <td style="width: 6%" >                   
+                      <a  class="my-hover" (click)="accion($event,op,elementos)"    ><i class="far fa-edit fa-2x icon-color-purple"></i></a>
+                   
+                  </td>
+                  <td style="width: 7%">{{elementos.id}}</td>
+                  <td style="width: 20%">{{elementos.obra_social_nombre}}</td>
+                  <td style="width: 10%">{{elementos.entidad_nombre}}</td>
+                  <td style="width: 8%">{{elementos.numero |date:'dd/MM/yyyy'}}</td>
+                  <td style="width: 10%">{{elementos.nivel}}</td>
+                  <td style="width: 10%">{{elementos.fecha_desde |date:'dd/MM/yyyy'}}</td>
+                  <td style="width: 10%">{{elementos.fecha_hasta |date:'dd/MM/yyyy'}}</td>                                                    
+                  <td style="width: 10%">{{elementos.cant_orden}}</td>                            
+                  <td style="width: 20%">{{elementos.total}}</td>  
+                  <td style="width: 15%">{{elementos.medico_nombre}}</td>                                
+                  <td style="width: 15%">{{elementos.nombreyapellido}}</td>      
+                  <td style="width: 3em">
+                    <p-tableCheckbox [value]="elementos" (click)="sumarValoresSeleccionados(selecteditems)"></p-tableCheckbox>
+                      </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr style="height:28px"  >
+          <td style="width: 20%">ORDENES : {{cantidad }}</td>                            
+        <td style="width: 40%" class="text-success text-bold">SELECCIONADO : {{total_seleccionado |  number : '1.2-2'}}</td>                                                            
+        <td style="width: 40%" class="text-info text-bold">TOTAL : {{total_facturado |  number : '1.2-2'}}</td>                                                     
+          </tr>
+        </ng-template> 
+  </p-table>
+</div>
+
+
+<p-overlayPanel #op [showTransitionOptions]="'400ms'" [hideTransitionOptions]="'300ms'"  [dismissable]="true" >                          
+    <span>   <a class="nav-link azul text-info  my-hover" (click)="editarRegistro()">Modificar registro</a></span>
+    <span>   <a class="nav-link azul text-info  my-hover" (click)="desafectarPresentacion()">Desafectar registro</a></span>
+    <span> <hr></span>
+    <span>   <a class="nav-link azul text-info my-hover" (click)="verDetalle()">Ver detalle</a></span>
+    
+  </p-overlayPanel>  
+
+  
+  <div style="position: absolute; opacity: 0.0; height: 0%;">  <canvas id="barcode"></canvas></div> 
+ 

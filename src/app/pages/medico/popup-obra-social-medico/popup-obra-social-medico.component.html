@@ -1,0 +1,38 @@
+<div class="row">
+<div class="col-6">
+    <p-listbox [options]="obrasocial"  [(ngModel)]="selectedItemObraSocial"  filter="filter"  optionLabel="nombre" (onChange)="onRowObraSocial()" [style]="{'min-width':'300px'}" [listStyle]="{'max-height':'400px' }">
+        <p-header>
+          Obra social
+        </p-header>
+        <ng-template let-usuarios   ui-listbox="btn bt-success">
+            <span >{{obrasocial.nombre}}</span>
+      
+        </ng-template>
+      </p-listbox>  
+      <div class="pt-3">
+        <button (click)="guardar()"  class="btn btn-success btn-md btn-block">Guardar</button>
+      </div>
+</div>
+
+<div class="col-6">
+
+
+    <p-listbox [options]="medicosobrasocial"  [(ngModel)]="selectedItemMedicoObraSocial"  filter="filter"  optionLabel="obra_social_nombre" (onChange)="onRowMedicoObraSocial($event)" [style]="{'min-width':'300px'}" [listStyle]="{'max-height':'400px'}">
+        <p-header>
+          Obra social asociada
+        </p-header>
+        <ng-template let-usuarios   ui-listbox="btn bt-success">
+            <span >{{medicosobrasocial.obra_social_nombre}}</span>
+      
+        </ng-template>
+      </p-listbox>  
+<div class="pt-3">
+    <button (click)="borrar()"  class="btn btn-danger btn-sm ">Borrar seleccionado</button>
+  </div>
+  <hr>
+
+</div>
+
+</div>
+
+

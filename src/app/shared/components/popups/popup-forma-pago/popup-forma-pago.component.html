@@ -1,0 +1,128 @@
+
+        
+<div >
+    <app-loading *ngIf="loading"> </app-loading> 
+   
+  </div>
+  <p-toast (life)="100" styleClass="custom-toast" [style]="{marginTop: '100px'}"></p-toast>
+        <form [formGroup]="formPago">
+  
+          <div class="row">
+              
+            <div class="col-5">
+              <div class="form-group ">
+                <div class="row">
+                  <div class="col-10">
+                    <label></label>
+                  </div>  
+                  <div class="col-2">
+                      
+                  </div>
+                </div>
+<!-- 
+                <div class="row">
+                    <div class="col-10 input-group input-group-sm mb-3">
+                        <input (keyup.enter)="buscarConcepto()" placeholder="Agregar concepto" class="form-control col-md-12 form-control-sm" formControlName="concepto"  autofocus />                  
+                        <div class="input-group-append">
+                          <span class="input-group input-group-text form-control-sm">
+                            <a  (click)="buscarConcepto()">
+                                <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                            </a>
+                         </span>
+                        </div>
+                        <div *ngIf="formPago.controls.concepto.errors?.required && formPago.controls.concepto.touched" class="error">
+                                * Este campo es requerido
+                        </div>
+                    </div>  
+                    <div class="col-2">
+                       
+                    </div>
+                  </div> -->
+                   
+            </div>    
+                   
+
+          </div>
+          <div class="col-2">
+              <div class="form-group ">
+                <div class="row">
+                  <div class="col-10">
+                    <label></label>
+                  </div>                     
+                </div>    
+                <div class="col-8 input-group input-group-sm mb-3  ">  
+                  <input class="form-control col-md-12 form-control-sm" placeholder="Monto abonado" type="number" formControlName="monto"   >
+                  <div class="input-group-append">
+                    <span class="input-group input-group-text form-control-sm">$</span>
+                  </div>
+                </div>
+                </div>
+            </div>
+                      
+            <div class="col-3">
+                <div class="form-group ">
+                    <div class="row">
+                      <div class="col-10">
+                        <label  ></label>
+                      </div>          
+                    </div>
+                    <div>
+                    <p-dropdown [options]="tipoPago"  formControlName="forma_pago" placeholder="Forma de pago" optionLabel="name" [showClear]="true"></p-dropdown>
+                  </div>
+                  </div>
+              </div>
+
+                 
+          <div class="col-2 justify-content-sm-end">
+              <div class="form-group ">
+                  <div class="row">
+                    <div class="col-10">
+                      <label  ></label>
+                    </div>          
+                  </div>
+                  <div class="col-12 ">
+                  <button class="btn btn-info btn-sm">Agregar</button>
+                </div>
+                </div>
+            </div>
+
+          </div>
+          </form>
+          <hr>
+          <p-table #dt class="pt-2" [columns]="cols"   selectionMode="single" [resizableColumns]="true"
+           [scrollable]="true" scrollHeight="400px" >
+      
+         <ng-template pTemplate="header" let-columns >
+ 
+                 <tr>
+                     <th  *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn >
+                         {{col.header}}
+                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                     </th>
+                     
+                 </tr>
+                 <tr>
+                     <th *ngFor="let col of columns" [ngSwitch]="col.field" >                     
+                         <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'concepto'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                         <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'monto'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                         <input class="form-control col-md-12 form-control-sm" *ngSwitchCase="'forma_pago'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                     </th>
+                    
+                 </tr>
+             </ng-template>
+      
+             <ng-template pTemplate="body" let-elementos>
+                         <tr [pSelectableRow]="elementos" >
+                             <td>{{elementos.concepto}}</td>
+                             <td>{{elementos.monto}}</td>
+                             <td>{{elementos.forma_pago}}</td>                                                                               
+                         </tr>
+                     </ng-template>
+           
+          
+         </p-table>
+
+         <div class="pt-2 float-rigth">
+           <button class="btn btn-success ">Guardar</button>
+         </div>
+        

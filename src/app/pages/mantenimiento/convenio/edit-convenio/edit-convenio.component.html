@@ -1,0 +1,80 @@
+
+            <form class="col-md-12"  [formGroup]="updateDataForm" (ngSubmit)="actualizarDatos()">
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group ">
+                          <div class="row">
+                              <div class="col-10">
+                          <label  >Obra social</label>
+                        </div>  
+                          <div class="col-2">
+                              <a  (click)="editarObraSocial()">
+                                  <img class="pointer float-right" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px" >
+                              </a>
+                          </div>
+                          </div>
+                              <input  (keyup.enter)="editarObraSocial()" class="form-control col-md-12" formControlName="obra_social_nombre" [autofocus]="true" />
+                              <div *ngIf="updateDataForm.controls.obra_social_nombre.errors?.required && updateDataForm.controls.obra_social_nombre.touched" class="error">
+                                      * Este campo es requerido
+                              </div>
+                      </div>
+                      <div class="form-group">
+                              <div class="row">
+                                      <div class="col-10">
+                                  <label  >Codigo</label>
+                                </div>  
+                                  <div class="col-2">
+                                      <a  (click)="editarPmo()">
+                                          <img class="pointer float-right" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px" >
+                                      </a>
+                                  </div>
+                                  </div>
+                              <input  (keyup.enter)="editarPmo()" class="form-control col-md-12 " formControlName="codigo"     />
+                              <div *ngIf="updateDataForm.controls.codigo.errors?.required && updateDataForm.controls.codigo.touched" class="error">
+                                              * Este campo es requerido
+                              </div>
+                      </div>
+                      <div class="form-group">
+                              <label  >Descripcion</label>
+                              <input class="form-control col-md-12" formControlName="pmo_descripcion"    />
+                             
+                      </div>
+                      <div class="form-group">
+                          <label  >Complejidad</label>
+                          <input class="form-control col-md-12" formControlName="complejidad"   />
+                      </div>
+                    
+                  </div>
+                  <div class="col-md-6">
+                         
+                          <div class="form-group">
+                              <label  >Valor</label>
+                              <input class="form-control col-md-12" formControlName="valor"   />
+                              <div *ngIf="updateDataForm.controls.valor.errors?.required && updateDataForm.controls.valor.touched" class="error">
+                                              * Este campo es requerido
+                              </div>
+                    </div>
+                    <div class="form-group ui-g-12">
+                        <label  >Habilitado</label>
+                        <div class="row">
+                          <div class="col-6"><p-radioButton name="groupname" formControlName="es_habilitado"   value="S" label="Si"  inputId="opt1"></p-radioButton></div>
+                          <div class="col-6"><p-radioButton name="groupname"  formControlName="es_habilitado"   value="N" label="No"  inputId="opt2"></p-radioButton></div>
+                        </div>
+                        <div *ngIf="updateDataForm.controls.es_habilitado.errors?.required && updateDataForm.controls.es_habilitado.touched" class="error">
+                            * Este campo es requerido
+                         </div>
+                </div>
+                 </div>
+                 
+                    
+          </div>
+  
+          </form>
+          <p-footer>
+                  <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                          <button *ngIf="!newItem"  [formGroup]="updateDataForm" class="btn btn-primary" type="submit" (click)="actualizarDatos()" >Actualizar</button>
+                          <button *ngIf="newItem" [disabled]="!updateDataForm.valid"  [formGroup]="updateDataForm" class="btn btn-primary" type="submit" (click)="actualizarDatos()" >Crear</button>
+                  </div>
+              </p-footer>
+     
+        

@@ -1,0 +1,69 @@
+<!-- div class="wrapper fadeInDown">
+  <div id="formContent">
+ 
+    <h2 class="active"> Sign In </h2>
+
+
+  
+    <div class="fadeIn first">
+      <img src="assets/img/login-user.jpg" id="icon" alt="User Icon" />
+    </div>
+
+   
+    <form>
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
+      <input type="submit" class="fadeIn fourth" value="Ingresar">
+    </form>
+
+    
+    
+
+  </div>
+</div> -->
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+<h2 class="active"> Ingresar</h2>
+<div class="fadeIn first">
+  <img src="assets/img/login-user.jpg" id="icon" alt="User Icon" />
+</div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <input type="text" formControlName="username" class="fadeIn second" name="login" placeholder="Usuario">
+  <input type="text" formControlName="password" class="fadeIn third" name="login" placeholder="Contraseña">
+  <input type="submit" class="fadeIn fourth" value="Ingresar">
+  <button  class="btn btn-primary">Ingresar</button>
+</form>
+
+</div>
+</div>
+<!-- 
+<div class="alert alert-info">
+  Username: test<br />
+  Password: test
+</div>
+<h2>Login</h2>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+      <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">Username is required</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <button  class="btn btn-primary">Login</button>
+    
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+  </div>
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+</form>
+
+<button  class="btn btn-primary" (click)="ver()">ver</button>
+<button  class="btn btn-primary" (click)="loadList()">listar</button> -->

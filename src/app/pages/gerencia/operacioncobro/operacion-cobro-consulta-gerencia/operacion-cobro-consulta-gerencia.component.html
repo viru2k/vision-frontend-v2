@@ -1,0 +1,143 @@
+
+<div >
+  <app-loading *ngIf="loading"> </app-loading> 
+ 
+</div>
+<p-toast (life)="100" styleClass="custom-toast" [style]="{marginTop: '100px'}"></p-toast>
+
+<div class="row m-1 ">
+    
+  <div class="row m-2" role="toolbar" aria-label="Toolbar with button groups">
+      <div  class="input-group input-group-sm ">
+              <form  [formGroup]="DateForm">
+              <div class="btn-group mr-1" role="group">
+                      <span class="pr-1 pt-1"><h6>Desde:</h6></span>
+                      <p-calendar [inputStyle]="{'height':'29.1px'}" [showTime]="true"   class="mr-2 " formControlName="fecha_desde"  (onSelect)="actualizarFechaDesde($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true"  [monthNavigator]="true" [yearNavigator]="true" yearRange="1950:2100">
+                        <ng-template pTemplate="date" let-date>
+                                <span    style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                            </ng-template> 
+                        </p-calendar>
+                        <span class="pr-1 pt-1"><h6>Hasta:</h6></span>
+                        <p-calendar [inputStyle]="{'height':'29.1px'}"  [showTime]="true"  class="mr-2 " formControlName="fecha_hasta"  (onSelect)="actualizarFechaHasta($event)" tabindex="0"  [locale]="es" dateFormat="dd/mm/yy"   [readonlyInput]="true"  [monthNavigator]="true" [yearNavigator]="true" yearRange="1950:2100">
+                            <ng-template pTemplate="date" let-date>
+                                <span  inputStyle="{'height':'29.5px'}"  style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+                            </ng-template> 
+                        </p-calendar>                                  
+                        <div class=" ml-2 row">
+                           <div> <button    class="btn  btn-success btn-sm  "  (click)="loadRegistro()" >Buscar Registros</button></div>
+                           <div class="ml-2"><button    class="btn  btn-info btn-sm float-right  pr-2" (click)="afectarRegistros()" >Auditar registros</button>   </div>                           
+                          </div>       
+      </div>   
+              </form>            
+            
+      </div>    
+  </div>
+  <p-table  #dt class="pt-2"  tableStyleClass="prime-table" selectionMode="single" [columns]="cols" [value]="elementos"  (onEditComplete)="editRow($event)" [(selection)]="selecteditems" columnResizeMode="expand" [responsive]="true"
+  scrollHeight="400px" [scrollable]="true"  (onFilter)="filtered($event)"  >
+  <ng-template pTemplate="caption">
+    <div class="row">
+            <div class="col-md-7 row" style="text-align:left ">
+             <div class="pr-2 pl-2">   <button    class="btn  btn-info btn-sm   "  (click)="generarPdfListado('todos')" >Imprimir resumen</button></div>
+             <div><button    class="btn  btn-success btn-sm "  (click)="generarPdfListado('medico')" >Imprimir resumen por médico</button></div>     
+             <div>  <button    class="ml-2 btn  btn-primary btn-sm float-right "  (click)="buscarPractica()" >Buscar otros registros</button></div>                       
+            </div>
+    <div class="col-md-5" style="text-align:right">                                
+        <input  class="form-control col-md-12 form-control-sm" type="text"  placeholder="Buscar en toda la tabla" (input)="dt.filterGlobal($event.target.value, 'contains')"  >
+    </div>
+ </div>
+</ng-template>
+             <ng-template pTemplate="header" let-columns >
+            
+                        <tr >
+                             
+                          <th  *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
+                              {{col.header}}
+                              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                          </th> 
+                          <th style="width: 3em">
+                                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                          </th>
+                      </tr> 
+                      <tr>
+                        <th *ngFor="let col of columns" [ngSwitch]="col.field"  >
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'operacion_cobro_id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                            <input style=" font-size: 12px;"  class="form-control col-md-12 form-control-sm" *ngSwitchCase="'apellido'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'dni'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                      
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'obra_social_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'gravado_adherente'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm"  *ngSwitchCase="'descripcion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                                                  
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'complejidad'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                      
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'codigo'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                      
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'medico_nombre'" pInputText type="text" (input)="dt.filter($event.target.value , col.field, col.filterMatchMode)" >                      
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'usuario_cobro_nombre'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                      
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'fecha_cobro'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                      
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'cantidad'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                                             
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'valor_original'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                       
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'valor_facturado'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                       
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'distribucion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                       
+                            <input style=" font-size: 12px;" class="form-control col-md-12 form-control-sm" *ngSwitchCase="'forma_pago'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" >                       
+                            
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+              
+        <ng-template pTemplate="body" let-elementos  >
+            <tr style="height:28px" >
+                   
+                    <td style="width: 6%" >                   
+                        <a     (click)="accion($event,op,elementos)"    ><i class="far fa-edit fa-2x icon-color-purple my-hover"></i></a>
+                     
+                    </td>
+                    <td style="font-size: 11px;width: 5%">{{elementos.operacion_cobro_id}}</td>
+                    <td style="font-size: 11px;width: 10%">{{elementos.apellido}}</td>
+                    <td style="font-size: 11px;width: 10%">{{elementos.nombre}}</td>
+                    <td style="font-size: 11px;width: 7%">{{elementos.dni}}</td>
+                    <td style="font-size: 11px;width: 15%">{{elementos.obra_social_nombre}}</td>                                                    
+                    
+                    <td style="font-size: 11px;width: 15%">{{elementos.descripcion}}</td>                            
+                    <td style="font-size: 11px;width: 5%">{{elementos.complejidad}}</td>  
+                    <td style="font-size: 11px;width: 8%">{{elementos.codigo}}</td>  
+                    <td style="font-size: 11px;width: 10%">{{elementos.medico_nombre}}</td>  
+                    <td style="font-size: 11px;width: 8%">{{elementos.usuario_cobro_nombre}}</td> 
+                    <td style="font-size: 11px;width: 8%">{{elementos.fecha_cobro | date: 'dd/MM/yyyy'}}</td>    
+                    <td style="font-size: 11px;width: 15%">{{elementos.motivo_observacion}}</td>      
+                    <td [ngClass]="colorRow(elementos.forma_pago)" style="font-size: 11px; font-weight:bold;width: 6%">{{elementos.cantidad}}</td>                                         
+                    <td [ngClass]="colorRow(elementos.forma_pago)" style="font-size: 11px; font-weight:bold;width: 6%" >{{elementos.valor_original}}</td>    
+                    <td style="font-size: 11px;width: 6%" >{{elementos.valor_facturado}}</td>    
+                    <td style="font-size: 11px;width: 6%" >{{elementos.distribucion |  number : '1.2-2'}}</td>    
+                    <td style="font-size: 11px;width: 10%">{{elementos.forma_pago}}</td>
+                  <td style="width: 3em">
+                          <p-tableCheckbox [value]="elementos"></p-tableCheckbox>
+                      </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+              <ul>
+             <!--      <li *ngFor="let sel of selecteditems" style="text-align: left">
+                      {{sel.obra_social_nombre + ' - ' + sel.descripcion + ' - ' + sel.fecha_cobro + ' - ' + sel.medico_nombre}}
+                  </li>-->
+              </ul>
+          </ng-template> 
+  </p-table>
+ 
+<div class="container-fluid pt-4">
+      <hr>
+  <div class="row float-right">
+      <h6 class="text-info pr-2">CANTIDAD PRACTICAS : {{cantidad_practica}}  -</h6>
+      <h6 class="text-danger"> TOTAL REAL : {{total_original|  number : '1.2-2' }} $ -</h6>
+      <h6 class="text-info"> TOTAL : {{total_facturado|  number : '1.2-2' }} $</h6>
+  </div>
+</div>
+</div>
+
+<p-overlayPanel #op [showTransitionOptions]="'400ms'" [hideTransitionOptions]="'300ms'"  [dismissable]="true" >                          
+  <span>   <a class="nav-link azul text-info  my-hover" (click)="editarRegistro()">Editar registro</a></span>
+  <span>   <a class="nav-link azul text-danger  my-hover" (click)="editarOperacionCobro()">Editar operacion cobro</a></span>
+  <span> <hr></span>
+  <span>   <a class="nav-link azul text-info my-hover" (click)="eliminarRegistro()">Eliminar registro</a></span>
+</p-overlayPanel>  
+
+
+

@@ -1,0 +1,28 @@
+<div class="container-fluid">
+  <div>
+     
+      <textarea [rows]="5" [cols]="30" pInputTextarea class="mt-1 mb-2 form-control form-control-sm col-md-12"[(ngModel)]="observacion"></textarea>   
+  </div>
+  <div class="row" >
+  <div >
+      <label>Estudios</label>
+      <p-dropdown class="mt-1 mb-2 col-12" [options]="estudios" [(ngModel)]="selectedEstudio" optionLabel="name" ></p-dropdown> 
+  </div>
+  <div >
+      <label>Médico solicitante</label>
+      <p-dropdown class="mt-1 mb-2 col-12" [options]="usuarios" [(ngModel)]="selectedMedicoEfector" optionLabel="nombreyapellido" ></p-dropdown>  
+  </div>
+
+  <div >
+    <label>Motivo observacion</label>
+    <p-dropdown class="mt-1 mb-2 col-12" [options]="motivos" [(ngModel)]="selectedMotivo" optionLabel="name" ></p-dropdown>  
+</div>
+ 
+<div class="float-right col-3">
+    <button    class=" ml-2 pt-1 btn  btn-success btn-md float-right "  (click)="guardarObservacion()" >Guardar</button>
+</div>
+</div>   
+
+
+
+</div>

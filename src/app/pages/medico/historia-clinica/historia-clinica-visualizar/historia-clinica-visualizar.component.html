@@ -1,0 +1,280 @@
+<div >
+  <app-loading *ngIf="loading"> </app-loading> 
+ 
+</div>
+<p-toast (life)="100" styleClass="custom-toast" [style]="{marginTop: '100px'}"></p-toast>
+
+  <!--ENCABEZADO-->
+  
+  
+    <div  >
+            <form  [formGroup]="formPaciente">
+        <div class=" row" >
+
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start mr-2 ml-2">
+                        <button class="btn btn-primary btn-sm btn-round texto-monserrat" type="button" (click)="buscarPaciente()" pInputText pTooltip="Buscar datos del paciente" placeholder="Right" tooltipEvent="hover">
+                           <i class="fas fa-search"></i> Buscar paciente
+                        </button>
+                     </div>
+                        <h6  class="mr-2 mt-3 texto-monserrat" *ngIf="formPaciente.value.paciente_nombre">PACIENTE :</h6> 
+                        <h6 class="mt-3 texto-monserrat">{{formPaciente.value.paciente_nombre}}</h6>
+                       </div>  
+                    
+           </div>
+
+    
+                    <div class="ml-4 d-flex justify-content-center">         
+                      <h6 class=" mt-3 texto-monserrat" *ngIf="formPaciente.value.edad">Edad :</h6>  
+                      <h6 class="mt-3 texto-monserrat">{{formPaciente.value.edad}}</h6>
+                    </div>   
+
+                  <div class="ml-4 d-flex justify-content-end">
+                    <div class=" input-group input-group-sm ">           
+                        <h6 class="mr-1 mt-1 mt-3 texto-monserrat" *ngIf="formPaciente.value.dni">DNI :</h6>  
+                        <h6 class="mt-3 texto-monserrat">{{formPaciente.value.dni}}</h6>                   
+                    </div>     
+                  </div>
+                  <div class="ml-4 d-flex justify-content-end">
+                      <div class=" input-group input-group-sm ">           
+                          <h6 class="mr-1 mt-1 mt-3 texto-monserrat" *ngIf="formPaciente.value.obra_social_nombre">Obra social :</h6>  
+                          <h6 class="mt-3 texto-monserrat">{{formPaciente.value.obra_social_nombre}}</h6>                   
+                      </div>     
+                    </div>
+                    <div class="ml-4 d-flex justify-content-end">
+                    <div class=" input-group input-group-sm ">           
+                        <h6 class="mr-1 mt-1 mt-3 texto-monserrat" *ngIf="formPaciente.value.domicilio">Domicilio :</h6>  
+                        <h6 class="mt-3 texto-monserrat">{{formPaciente.value.domicilio}}</h6>                   
+                    </div>                       
+                  </div>  
+                  <div class="ml-4 d-flex justify-content-end">
+                  <div class=" input-group input-group-sm ">           
+                      <h6 class="mr-1 mt-1 mt-3 texto-monserrat" *ngIf="formPaciente.value.obra_social_nombre">Número :</h6>  
+                      <h6 class="mt-3 texto-monserrat">{{formPaciente.value.numero_afiliado}}</h6 > <h6  *ngIf="formPaciente.value.obra_social_nombre" class="mt-3">/</h6> <h6 class="mt-3 texto-monserrat">{{formPaciente.value.barra_afiliado}}</h6>                   
+                  </div>                     
+                </div>  
+                </div>              
+            </form>  
+         
+          </div>
+        <hr>
+
+<div>
+   
+  <p-scrollPanel [style]="{width: '100%', height: '700px'}" styleClass="custom" >
+    <div *ngFor="let elemento of elementos" class="m-2">
+        <div class="card mt-2" >
+            <div class="card-header">
+                <div class="row d-flex justify-content-between">
+              
+                    <div  *ngIf="elemento.FECHA" class=" d-flex justify-content-start mt-3 ml-2" style="   border-radius: 6px 6px 0px 0px;
+                    -moz-border-radius: 6px 6px 0px 0px;
+                    -webkit-border-radius: 6px 6px 0px 0px;
+                    border: 1px  #AED581!important;"><h6 class="text-danger"> FECHA : {{elemento.FECHA | date: 'dd/MM/yyyy hh:mm'}}</h6></div>
+                    <div class=" d-flex justify-content-end">
+                        <button    class="btn  btn-warning btn-sm d-flex justify-content-end" (click)="imprimirListado()" ><i class="fas fa-file-signature "></i> Imprimir</button>   
+                    </div>
+
+                </div>
+            </div>
+          <div class="card-body">
+  
+            <div  *ngIf="elemento.MEDICONOM"><label>MEDICO : {{elemento.MEDICONOM}}</label></div>        
+            <div  *ngIf="elemento.MC"><label>MC : {{elemento.MC}}</label></div>    
+            <div  *ngIf="elemento.AEA"><label>AEA : {{elemento.AEA}}</label></div>    
+            <div  *ngIf="elemento.APP"><label>APP : {{elemento.APP}}</label></div>    
+            <div  *ngIf="elemento.AF"><label>AF : {{elemento.AF}}</label></div>    
+            <div  *ngIf="elemento.SINTOMAS"><label>SINTOMAS : {{elemento.SINTOMAS}}</label></div>  
+            
+            <div  *ngIf="elemento.SINTOMAS_SIGNOS"><label>SINTOMAS Y SIGNOS : {{elemento.SINTOMAS_SIGNOS}}</label></div>      
+            <div  *ngIf="elemento.TRATAMIENT"><label>TRATAMIENTO : {{elemento.TRATAMIENT}}</label></div>  
+            <div  *ngIf="elemento.DIAGNOSTIC"><label>DIAGNOSTICO : {{elemento.DIAGNOSTIC}}</label></div>  
+            <div  *ngIf="elemento.BIO"><label>BIO : {{elemento.BIO}}</label></div>    
+            <div  *ngIf="elemento.COMENTARIO"><label>COMENTARIO : {{elemento.COMENTARIO}}</label></div>    
+            <div  *ngIf="elemento.OBS_LENTES"><label>OBS LENTES : {{elemento.OBS_LENTES}}</label></div>    
+            <div  *ngIf="elemento.OBSERVACIO"><label>OBSERVACIO : {{elemento.OBSERVACIO}}</label></div>    
+            <div  *ngIf="elemento.FO"><label>FO : {{elemento.FO}}</label></div>    
+
+
+            <div class=" mt-2  card" *ngIf="elemento.estudio_id">                
+                  <div class="  row d-flex justify-content-between">
+                <div  *ngIf="elemento.estudio_nombre" class="d-flex justify-content-start mt-2 ml-4"> 
+                   <label class="mt-2">ESTUDIO REALIZADO: {{elemento.estudio_nombre}}</label>
+                  </div>
+               <div class=" d-flex justify-content-end">  <button    class="btn  btn-info btn-md float-left mr-4 ml-2" (click)="verEstudios(elemento.estudio_id)" ><i class="fas fa-camera fa-lg"></i>  Ver estudio</button>                
+               </div>                                
+            </div>
+            </div>
+           
+      </div>
+      </div>
+
+    
+
+
+      <div class="card mt-2" *ngIf="elemento.AV_LEJOS_O || elemento.AV_LEJOS_2 || elemento.AV_LEJOS_3 || elemento.AV_LEJOS_4 ||elemento.AV_LEJOS_5 || elemento.AV_LEJOS_6 || elemento.AV_LEJOS_7 || elemento.AV_LEJOS_8">
+          <div class="card-body">
+              <label class="card-title ">EXAMEN</label>
+           <div class="row">
+             <div class="col-1">
+               <div>
+                  
+               </div>       
+             </div>
+             <div class="col-10">
+                <div class="row">
+                    <label class="pt-1 form-control-label col-md-1" ></label>
+                    <label class="  col-md-2 form-control-sm text-primary ml-2 mr-2"  >AV s/c</label>
+                    <label class="  col-md-2 form-control-sm text-primary mr-2" >Autorefractometro</label>
+                    <label class="  col-md-2 form-control-sm text-primary mr-2" >AV c/c</label>
+                    <label class="  col-md-2 form-control-sm text-primary mr-2" >AV c/e</label>                       
+                 </div>
+               <div class="row">
+                  <label class="pt-1 form-control-label col-md-1" >OD : </label>
+                  <label class=" form-control col-md-2 form-control-sm  ml-2 mr-2"  >{{elemento.AV_LEJOS_O}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.AV_LEJOS_2}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.AV_LEJOS_3}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.AV_LEJOS_4}}</label>                       
+               </div>
+               <div class="row">
+                  <label class="pt-1  form-control-label col-md-1 mt-1" >OI : </label>
+                  <label class=" form-control col-md-2 form-control-sm  ml-2 mr-2 mt-1" >{{elemento.AV_LEJOS_5}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.AV_LEJOS_6}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.AV_LEJOS_7}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.AV_LEJOS_8}}</label>    
+               </div>
+             </div>       
+           </div>         
+          
+          </div>
+        </div>
+    
+ 
+
+
+
+      <div class="card mt-1" *ngIf="elemento.LEJOS_OD_E || elemento.LEJOS_OD_C || elemento.LEJOS_OD_2 || elemento.LEJOS_OD_P || elemento.LEJOS_OD_B || elemento.LEJOS_OI_E || elemento.LEJOS_OI_C || elemento.LEJOS_OI_2 || elemento.LEJOS_OI_P || elemento.LEJOS_OI_B || elemento.CERCA_OD_E || elemento.CERCA_OD_C || elemento.CERCA_OD_2 || elemento.CERCA_OD_P || elemento.CERCA_OD_B || elemento.CERCA_OI_E || elemento.CERCA_OI_C || elemento.CERCA_OI_2 || elemento.CERCA_OI_P || elemento.CERCA_OI_B">
+          <div class="card-body">
+              <label class="card-title " >LENTE</label>
+           <div class="row">
+             <div class="col-1">
+               <div>
+                  <label>LEJOS</label>
+               </div>       
+             </div>
+             <div class="col-10">
+                <div class="row">
+                    <label class="pt-1 form-control-label col-md-1" ></label>
+                    <label class="  col-md-2 form-control-sm text-primary ml-2 mr-2"  >Esférico</label>
+                    <label class="  col-md-2 form-control-sm text-primary mr-2" >Cilíndrico</label>
+                    <label class="  col-md-2 form-control-sm text-primary mr-2" >Eje</label>
+                    <label class="  col-md-2 form-control-sm text-primary mr-2" >Prisma</label>                       
+                    <label class="  col-md-2 form-control-sm text-primary mr-2" >Base</label>                       
+                
+                 </div>
+               <div class="row">
+                  <label class="pt-1 form-control-label col-md-1" >OD : </label>
+                  <label class=" form-control col-md-2 form-control-sm  ml-2 mr-2" >{{elemento.LEJOS_OD_E}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.LEJOS_OD_C}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.LEJOS_OD_2}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.LEJOS_OD_P}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.LEJOS_OD_B}}</label>           
+               </div>
+               <div class="row">
+                  <label class="pt-1  form-control-label col-md-1 mt-1" >OI : </label>
+                  <label class=" form-control col-md-2 form-control-sm  ml-2 mr-2 mt-1" >{{elemento.LEJOS_OI_E}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.LEJOS_OI_C}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.LEJOS_OI_2}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.LEJOS_OI_P}}</label>
+                  <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.LEJOS_OI_B}}</label>              
+               </div>
+             </div>       
+           </div>
+           <hr>
+           <div class="row">
+              <div class="col-1">
+                <div>
+                   <label>CERCA</label>
+                </div>       
+              </div>
+              <div class="col-10">
+                <div class="row">
+                   <label class="pt-1 form-control-label col-md-1" >OD : </label>
+                   <label class=" form-control col-md-2 form-control-sm  ml-2 mr-2" >{{elemento.CERCA_OD_E}}</label>
+                   <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.CERCA_OD_C}}</label>
+                   <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.CERCA_OD_2}}</label>
+                   <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.CERCA_OD_P}}</label>
+                   <label class=" form-control col-md-2 form-control-sm  mr-2" >{{elemento.CERCA_OD_B}}</label>           
+                </div>
+                <div class="row">
+                   <label class="pt-1  form-control-label col-md-1 mt-1" >OI : </label>
+                   <label class=" form-control col-md-2 form-control-sm  ml-2 mr-2 mt-1" >{{elemento.CERCA_OI_E}}</label>
+                   <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.CERCA_OI_C}}</label>
+                   <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.CERCA_OI_2}}</label>
+                   <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.CERCA_OI_P}}</label>
+                   <label class=" form-control col-md-2 form-control-sm  mr-2 mt-1" >{{elemento.CERCA_OI_B}}</label>              
+                </div>
+              </div>       
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="card mt-2 col-12" *ngIf="elemento.REFRACCION_OD || elemento.REFRACCION_OI || elemento.CICLOPEGIA_OD || elemento.CICLOPEGIA_OI || elemento.FONDO_OD || elemento.FONDO_OI || elemento.PIO_OD || elemento.PIO_OI || elemento.BIO_OD || elemento.BIO_OI || elemento.DIAGNOSTICO_OD || elemento.DIAGNOSTICO_OI || elemento.TRATAMIENTO_MEDICO || elemento.TRATAMIENTO_QUIRURGICO || elemento.ESTUDIOSES" >
+          <div class="card-body">
+
+        <label *ngIf="elemento.REFRACCION_OD || elemento.REFRACCION_OI"  >AUTOREFRACTOMETRO</label>
+        
+        <div *ngIf="elemento.REFRACCION_OD || elemento.REFRACCION_OI" class="row col-4 mt-3  mb-3">
+            <div class="col-6" *ngIf="elemento.REFRACCION_OD"><label>REFRACCION OD : {{elemento.REFRACCION_OD}}</label></div>   
+            <div class="col-6" *ngIf="elemento.REFRACCION_OI"><label>REFRACCION OI : {{elemento.REFRACCION_OI}}</label></div>   
+
+        </div>  
+        <hr *ngIf="elemento.CICLOPEGIA_OD || elemento.CICLOPEGIA_OI">
+        <label *ngIf="elemento.CICLOPEGIA_OD || elemento.CICLOPEGIA_OI"  >CICLOPEGIA</label>            
+        <div *ngIf="elemento.CICLOPEGIA_OD || elemento.CICLOPEGIA_OI" class="row col-4  mt-3  mb-3">
+            <div class="col-6" *ngIf="elemento.CICLOPEGIA_OD"><label>CICLOPEGIA OD : {{elemento.CICLOPEGIA_OD}}</label></div>   
+            <div class="col-6" *ngIf="elemento.CICLOPEGIA_OI"><label>CICLOPEGIA OI : {{elemento.CICLOPEGIA_OI}}</label></div>   
+        </div>
+        <hr *ngIf="elemento.FONDO_OD || elemento.FONDO_OI">
+        <label *ngIf="elemento.FONDO_OD || elemento.FONDO_OI"  >FONDO DE OJO</label>
+        <div *ngIf="elemento.FONDO_OD || elemento.FONDO_OI" class="row col-4  mt-3  mb-3">
+            <div class="col-6" *ngIf="elemento.FONDO_OD"><label>FO OD : {{elemento.FONDO_OD}}</label></div>   
+            <div class="col-6" *ngIf="elemento.FONDO_OI"><label>FO OI : {{elemento.FONDO_OI}}</label></div>   
+        </div>
+        <hr  *ngIf="elemento.PIO_OD || elemento.PIO_OI" >
+        <label *ngIf="elemento.PIO_OD || elemento.PIO_OI"  >PRESION INTRAOCULAR</label>
+        <div *ngIf="elemento.PIO_OD || elemento.PIO_OI" class="row col-4  mt-3  mb-3">
+            <div class="col-6" *ngIf="elemento.PIO_OD"><label>PIO OD : {{elemento.PIO_OD}}</label></div>   
+            <div class="col-6" *ngIf="elemento.PIO_OI"><label>PIO OI : {{elemento.PIO_OI}}</label></div>   
+        </div>
+        <hr *ngIf="elemento.BIO_OD || elemento.BIO_OI">
+        <label *ngIf="elemento.BIO_OD || elemento.BIO_OI" >BIOMICROSCOPIA</label>
+        <div *ngIf="elemento.BIO_OD || elemento.BIO_OI" class="row col-4 mt-3 mb-3">
+            <div class="col-6" *ngIf="elemento.BIO_OD"><label>BIO OD : {{elemento.BIO_OD}}</label></div>   
+            <div class="col-6" *ngIf="elemento.BIO_OI"><label>BIO OI : {{elemento.BIO_OI}}</label></div>   
+        </div>
+        <hr *ngIf="elemento.DIAGNOSTICO_OD || elemento.DIAGNOSTICO_OI">
+        <label *ngIf="elemento.DIAGNOSTICO_OD || elemento.DIAGNOSTICO_OI"  >DIAGNOSTICO</label>
+        <div *ngIf="elemento.DIAGNOSTICO_OI || elemento.DIAGNOSTICO_OI" class="row col-4 mt-3  mb-3">
+            <div class="col-6" *ngIf="elemento.DIAGNOSTICO_OD"><label>DIAGNOSTICO OD : {{elemento.DIAGNOSTICO_OD}}</label></div>   
+            <div class="col-6" *ngIf="elemento.DIAGNOSTICO_OI"><label>DIAGNOSTICO OI : {{elemento.DIAGNOSTICO_OI}}</label></div>   
+        </div>
+        <hr *ngIf="elemento.TRATAMIENTO_MEDICO || elemento.TRATAMIENTO_QUIRURGICO">
+        <label *ngIf="elemento.TRATAMIENTO_MEDICO || elemento.TRATAMIENTO_QUIRURGICO"  >TRATAMIENTO</label>
+        <div  *ngIf="elemento.TRATAMIENTO_MEDICO"><label>MEDICO : {{elemento.TRATAMIENTO_MEDICO}}</label></div> 
+        <div  *ngIf="elemento.TRATAMIENTO_QUIRURGICO"><label>QUIRURGICO : {{elemento.TRATAMIENTO_QUIRURGICO}}</label></div> 
+        <div  *ngIf="elemento.ESTUDIOSES"><label>ESTUDIOS FONDO DE OJO : {{elemento.ESTUDIOSES}}</label></div> 
+
+      </div>
+    </div>
+    
+      </div>
+</p-scrollPanel>
+
+</div>
+
+
+
+

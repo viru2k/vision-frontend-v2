@@ -1,0 +1,24 @@
+.shadow {
+    -webkit-border-radius: 5% 5% 100% 100% / 5% 5% 8px 8px;
+    -webkit-box-shadow: rgba(0, 0, 0,.30)  2px 3px;
+    }
+    .container {
+ 
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+      
+      background: #F2F2F2;
+      border: 1px solid #ccc;
+      box-shadow: 1px 1px 2px #fff inset,
+                  -1px -1px 2px #fff inset;
+      border-radius: 3px/6px;         
+        
+        
+    }
+
+
+    
+    
+    

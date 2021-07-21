@@ -1,0 +1,102 @@
+     
+            <form class="col-12"  [formGroup]="FormFicha">
+                <H6>Médicos</H6>
+                <hr>
+              <div class="row">
+                
+          <div class="col-12">
+
+                           
+                      <div class="form-group ">
+                        <div >
+                            <label  >Opera</label>
+                          </div> 
+                        <div class=" input-group input-group-sm mb-3">
+                            <input (keyup.enter)="buscarOpera()" placeholder="Médico opera" class="form-control col-md-12 form-control-sm" formControlName="medico_opera_nombre"   />                  
+                            <div class="input-group-append">
+                              <span class="input-group input-group-text form-control-sm">
+                                <a  (click)="buscarOpera()">
+                                    <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                </a>
+                            </span>
+                            </div>
+                        </div>  
+                    </div>
+                     
+                      <div class="form-group ">
+                        <div >
+                            <label  >Deriva</label>
+                          </div> 
+                        <div class=" input-group input-group-sm mb-3">
+                            <input (keyup.enter)="buscarDeriva()" placeholder="Médico deriva" class="form-control col-md-12 form-control-sm" formControlName="medico_deriva_nombre"   />                  
+                            <div class="input-group-append">
+                              <span class="input-group input-group-text form-control-sm">
+                                <a  (click)="buscarDeriva()">
+                                    <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                                </a>
+                            </span>
+                            </div>
+                        </div>  
+                    </div>
+                   
+                     
+                    <div class="form-group ">
+                      <div >
+                          <label  >Ayuda</label>
+                        </div> 
+                      <div class=" input-group input-group-sm mb-3">
+                          <input (keyup.enter)="buscarAyuda()" placeholder="Médico ayuda" class="form-control col-md-12 form-control-sm" formControlName="medico_ayuda_nombre"   />                  
+                          <div class="input-group-append">
+                            <span class="input-group input-group-text form-control-sm">
+                              <a  (click)="buscarAyuda()">
+                                  <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                              </a>
+                          </span>
+                          </div>
+                      </div>  
+                  </div>
+
+                   
+                  <div class="form-group ">
+                    <div >
+                        <label  >Factura</label>
+                      </div> 
+                    <div class=" input-group input-group-sm mb-3">
+                        <input (keyup.enter)="buscarFactura()" placeholder="Médico factura" class="form-control col-md-12 form-control-sm" formControlName="medico_factura_nombre"   />                  
+                        <div class="input-group-append">
+                          <span class="input-group input-group-text form-control-sm">
+                            <a  (click)="buscarFactura()">
+                                <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                            </a>
+                        </span>
+                        </div>
+                    </div>  
+                </div>
+                
+              
+                <div class="form-group ">
+                  <div >
+                      <label  >Anestesista</label>
+                    </div> 
+                  <div class=" input-group input-group-sm mb-3">
+                      <input (keyup.enter)="buscarAnestesista()" placeholder="Médico anestesista" class="form-control col-md-12 form-control-sm" formControlName="medico_anestesista_nombre"   />                  
+                      <div class="input-group-append">
+                        <span class="input-group input-group-text form-control-sm">
+                          <a  (click)="buscarAnestesista()">
+                              <img class="pointer float-left" src="assets/icons/grey/outline_search_black_18dp.png" width="24px" height="24px"  >
+                          </a>
+                      </span>
+                      </div>
+                  </div>  
+              </div>
+              </div>
+      </div>
+           
+          </form>
+          <p-footer>
+                  <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                          <button  [disabled]="!FormFicha.valid" [formGroup]="FormFicha" class="btn btn-primary" type="submit" (click)="guardarDatos()" >Guardar</button>
+                          
+                  </div>
+              </p-footer>
+     
