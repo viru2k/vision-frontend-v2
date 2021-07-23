@@ -274,4 +274,15 @@ export class FacturacionService {
         medico_id
     );
   }
+
+  postFacturaMedico(val: any[], user_id: string) {
+    console.log(val);
+    return this.http.post<any>(this.url + "medico/factura/add/" + user_id, val);
+  }
+
+  delFacturaMedico(factura_comprobante_medico_id: string) {
+    return this.http.delete<string>(
+      this.url + "medico/factura/remove/" + factura_comprobante_medico_id
+    );
+  }
 }

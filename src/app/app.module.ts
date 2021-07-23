@@ -29,7 +29,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 
 /** LIBRERIAS 3RO**/
 
-import { PdfViewerModule } from "ng2-pdf-viewer";
 import { GalleriaModule } from "primeng/galleria";
 import { FileUploadModule } from "primeng/fileupload";
 import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
@@ -67,7 +66,6 @@ import localeEsAR from "@angular/common/locales/es-AR";
 import { SweetAlert2Module } from "@toverux/ngx-sweetalert2";
 import { AutofocusModule } from "angular-autofocus-fix";
 import localeEsAr from "@angular/common/locales/es-AR";
-import { Ng2SearchPipeModule } from "ng2-search-filter";
 registerLocaleData(localeEsAR, "es-Ar");
 
 /****barcode para imprimir */
@@ -544,7 +542,6 @@ registerLocaleData(localeEsAR, "es-Ar");
     InputSwitchModule,
     ToggleButtonModule,
     AutoCompleteModule,
-    Ng2SearchPipeModule,
     SweetAlert2Module.forRoot(),
     AutofocusModule,
 

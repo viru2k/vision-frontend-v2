@@ -112,41 +112,9 @@ export class PopupMedicoFacturaComponent implements OnInit {
     console.log(e.value);
 
     this.loading = true;
-    /*    try {
-      this.userService.delModulo(e.value.user_modulo_id).subscribe(
-        (resp) => {
-          this.loadlistFacturaUsuario();
-          console.log(resp);
-        },
-        (error) => {
-          // error path
-          console.log(error);
-          this.alertServiceService.throwAlert(
-            "error",
-            "Error: " + error.status + "  Error al cargar los registros",
-            "",
-            "500"
-          );
-        }
-      );
-    } catch (error) {
-      this.alertServiceService.throwAlert(
-        "error",
-        "Error: " + error.status + "  Error al cargar los registros",
-        "",
-        "500"
-      );
-    } */
-  }
-
-  guardarModulos() {
-    console.log(this.selectedModulos);
-
-    this.loading = true;
-    this.mensaje = "Cargando modulos del usuario ...";
-    /*   try {
-      this.userService
-        .postUserMenu(this.selectedModulos, this.config.data.id)
+    try {
+      this.facturacionService
+        .delFacturaMedico(e.value.factura_comprobante_medico_id)
         .subscribe(
           (resp) => {
             this.loadlistFacturaUsuario();
@@ -170,6 +138,40 @@ export class PopupMedicoFacturaComponent implements OnInit {
         "",
         "500"
       );
-    } */
+    }
+  }
+
+  guardarModulos() {
+    console.log(this.selectedModulos);
+
+    this.loading = true;
+    this.mensaje = "Cargando modulos del usuario ...";
+    try {
+      this.facturacionService
+        .postFacturaMedico(this.selectedModulos, this.config.data.id)
+        .subscribe(
+          (resp) => {
+            this.loadlistFacturaUsuario();
+            console.log(resp);
+          },
+          (error) => {
+            // error path
+            console.log(error);
+            this.alertServiceService.throwAlert(
+              "error",
+              "Error: " + error.status + "  Error al cargar los registros",
+              "",
+              "500"
+            );
+          }
+        );
+    } catch (error) {
+      this.alertServiceService.throwAlert(
+        "error",
+        "Error: " + error.status + "  Error al cargar los registros",
+        "",
+        "500"
+      );
+    }
   }
 }
