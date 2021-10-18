@@ -29,6 +29,7 @@ export class FacturaElectronicaComponent implements OnInit {
   cols: any[];
   loading: boolean;
   loadingspinner: boolean;
+  credito: boolean;
   elementos: FacturaElectronicaRenglon[] = [];
   elementosPDF: any[] = [];
   elementosAlicuota: any[] = null;
@@ -42,21 +43,28 @@ export class FacturaElectronicaComponent implements OnInit {
   elementoAlicuota: number = null;
   elementoMedicos: any = null;
   elementoComprobante: number = null;
+  elementoComprobanteCredito: number = 0;
   elementoConcepto: number = null;
   elementoDocumento: number = null;
   elementoPtoVta: number = null;
+  elementoPtoVtaCredito: number = null;
   elementoCondicionIva: number = null;
+  comprobante_credito: string = null;
   selecteditemRegistro: FacturaElectronicaRenglon = null;
   selecteditemRenglon: FacturaElectronicaRenglon = null;
   facturaAlicuotaAsociada: FacturaAlicuotaAsociada[] = [];
 
   pto_vta: string = "0";
   _pto_vta: string = "0";
+  pto_vta_credito: string = "0";
+  _pto_vta_credito: string = "0";
   _medico_nombre = "";
   _comprobante_nombre = "";
+  _comprobante_nombre_credito = "";
   factura_numero: string = "0";
   factura_numero_ceros: string = "0";
   comprobante_id = 0;
+  comprobante_id_credito = 0;
   nrodocumento: string = "0";
   observacion: string = "";
   cliente: string = "";
@@ -78,6 +86,11 @@ export class FacturaElectronicaComponent implements OnInit {
   subtotal_excento: number = 0;
   subtotal_iva: number = 0;
   total: number = 0;
+  importe_total: number = 0;
+  importe_total_neto_no_gravado: number = 0;
+  importe_neto: number = 0;
+  importe_op_exenta: number = 0;
+  importe_iva: number = 0;
   userData;
   medico_id: string;
   peticion: string;
@@ -513,6 +526,15 @@ export class FacturaElectronicaComponent implements OnInit {
     console.log("elemento comprobante " + this.elementoComprobante);
     console.log("elemento concepto " + this.elementoConcepto);
     console.log("elemento pto. venta " + this.pto_vta);
+    console.log("TOTALES ");
+    console.log("importe_total " + this.importe_total);
+    console.log(
+      "importe_total_neto_no_gravado " + this.importe_total_neto_no_gravado
+    );
+    console.log("importe_op_exenta " + this.importe_op_exenta);
+    console.log("importe_neto " + this.importe_neto);
+    console.log("importe_iva " + this.importe_iva);
+
     let facturaElectronica = new FacturaElectronica(
       "0",
       this.pto_vta,
@@ -525,11 +547,11 @@ export class FacturaElectronicaComponent implements OnInit {
       this._fecha,
       this._fechaDesde,
       this._fechaHasta,
-      // tslint:disable-next-line: max-line-length
-      Math.round(this.subtotal * 100) / 100,
-      this.subtotal_excento,
-      Math.round(this.subtotal_iva * 100) / 100,
-      Math.round(this.total * 100) / 100,
+      this.importe_total,
+      this.importe_total_neto_no_gravado,
+      this.importe_neto,
+      this.importe_op_exenta,
+      this.importe_iva,
       this.facturaAlicuotaAsociada,
       this.elementos,
       "",
@@ -538,7 +560,11 @@ export class FacturaElectronicaComponent implements OnInit {
       this.observacion,
       this.elementoCondicionIva["categoria_iva"],
       this.es_afip,
-      this.userData.id
+      this.userData.id,
+      this.credito,
+      this.elementoComprobanteCredito["id"],
+      this.pto_vta,
+      this.comprobante_credito
     );
     console.log(facturaElectronica);
 
@@ -590,6 +616,7 @@ export class FacturaElectronicaComponent implements OnInit {
   CrearFactura(facturaElectronica) {
     this.loading = true;
     this.peticion = "Creando factura";
+
     try {
       this.facturacionService.crearFactura(facturaElectronica).subscribe(
         (resp) => {
@@ -658,6 +685,8 @@ export class FacturaElectronicaComponent implements OnInit {
       );
     } catch (error) {}
   }
+
+  private handleRenglones(): void {}
 
   obtenerMedico() {
     console.log(this.elementoMedicos);
@@ -750,6 +779,18 @@ export class FacturaElectronicaComponent implements OnInit {
     //this.obtenerUltimaFactura();
   }
 
+  obtenerPuntoVtaCredito() {
+    console.log(this.elementoPtoVtaCredito);
+    this._pto_vta_credito = this.elementoPtoVtaCredito["id"];
+    this._pto_vta_credito = this.padLeft(
+      this.elementoPtoVtaCredito["punto_vta"],
+      "0",
+      4
+    );
+    console.log(this.pto_vta_credito);
+    //this.obtenerUltimaFactura();
+  }
+
   onElementoDocumento() {
     console.log(this.elementoDocumento);
   }
@@ -797,6 +838,14 @@ export class FacturaElectronicaComponent implements OnInit {
     } catch (error) {}
   }
 
+  obtenerUltimaFacturaCredito() {
+    console.log(this.elementoComprobanteCredito);
+    this._comprobante_nombre_credito = this.comprobante_id =
+      this.elementoComprobanteCredito["descripcion"];
+    this.comprobante_id_credito = this.elementoComprobanteCredito["id"];
+    this.es_afip = this.elementoComprobanteCredito["es_afip"];
+  }
+
   agregarRenglon() {
     let data: any;
     //data = this.selecteditemRegistro;
@@ -813,10 +862,67 @@ export class FacturaElectronicaComponent implements OnInit {
       ) => {
         if (PopupOperacionCobroRegistroEditarComponent) {
           console.log(PopupOperacionCobroRegistroEditarComponent);
+
           let movimiento: FacturaElectronicaRenglon;
           movimiento = PopupOperacionCobroRegistroEditarComponent;
-          console.log();
+          console.log("renglones", movimiento);
+          console.log("facturaAlicuotaAsociada", this.facturaAlicuotaAsociada);
+          console.log("concepto iva", movimiento["tipo_concepto_iva"]["name"]);
+          console.log("tota_renglon", movimiento["total_renglon"]);
+          console.log("tota_renglon", movimiento.total_renglon);
 
+          if (movimiento["tipo_concepto_iva"]["name"] === "EXENTO") {
+            // Total neto no gravado
+            this.importe_total_neto_no_gravado =
+              this.importe_total_neto_no_gravado + 0;
+            // Importe neto
+            this.importe_neto = this.importe_neto + 0;
+            // importe operacion exentas
+            this.importe_op_exenta =
+              this.importe_op_exenta + movimiento.total_sin_iva;
+            // Importe iva
+            this.importe_iva = this.importe_iva + 0;
+            // Importe total
+            this.importe_total =
+              this.importe_iva +
+              this.importe_neto +
+              this.importe_op_exenta +
+              this.importe_total_neto_no_gravado;
+          }
+          if (movimiento["tipo_concepto_iva"]["name"] === "GRAVADO") {
+            // Total neto no gravado
+            this.importe_total_neto_no_gravado =
+              this.importe_total_neto_no_gravado + 0;
+            // Importe neto
+            this.importe_neto = this.importe_neto + movimiento.total_sin_iva;
+            // importe operacion exentas
+            this.importe_op_exenta = this.importe_op_exenta + 0;
+            // Importe iva
+            this.importe_iva = this.importe_iva + movimiento.iva;
+            // Importe total
+            this.importe_total =
+              this.importe_iva +
+              this.importe_neto +
+              this.importe_op_exenta +
+              this.importe_total_neto_no_gravado;
+          }
+          if (movimiento["tipo_concepto_iva"]["name"] === "NO GRAVADO") {
+            // Total neto no gravado
+            this.importe_total_neto_no_gravado =
+              this.importe_total_neto_no_gravado + movimiento.total_renglon;
+            // Importe neto
+            this.importe_neto = this.importe_neto + 0;
+            // importe operacion exentas
+            this.importe_op_exenta = this.importe_op_exenta + 0;
+            // Importe iva
+            this.importe_iva = this.importe_iva + 0;
+            // Importe total
+            this.importe_total =
+              this.importe_iva +
+              this.importe_neto +
+              this.importe_op_exenta +
+              this.importe_total_neto_no_gravado;
+          }
           /* -------------------------------------------------------------------------- */
           /*        COMPROBANTES FACTURA B Y C CON SUS NOTAS DE CREDITO Y DEBITO        */
           /* -------------------------------------------------------------------------- */
@@ -825,7 +931,6 @@ export class FacturaElectronicaComponent implements OnInit {
           console.log(this.elementos);
           // GUARDO LAS ALICUOTAS ASOCIADAS
 
-          // SE DEBE SEPARAR POR ALICUOTAS Y SUMAR LOS VALORES---- CORREGIR
           let alicuota_id = "0";
           let iva = 0;
           let precio_unitario = 0;
@@ -862,7 +967,6 @@ export class FacturaElectronicaComponent implements OnInit {
           }
           // SI EL RENGLON  DE ALICUOTA NO EXISTE LO CREO UNA UNICA VEZ
           if (!existe) {
-            //let _factura_alicuota_asociada = new FacturaAlicuotaAsociada(movimiento['alicuota_id'],Number(movimiento['iva']),Number(movimiento['precio_unitario']),'0' );
             let _factura_alicuota_asociada = new FacturaAlicuotaAsociada(
               movimiento["alicuota_id"],
               Math.round(Number(movimiento["iva"]) * 100) / 100,

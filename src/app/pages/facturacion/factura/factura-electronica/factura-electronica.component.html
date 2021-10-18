@@ -54,7 +54,7 @@
 </div>
 
 <hr />
-
+<!-- COMPROBANTE PARA FACTURAR -->
 <div class="d-flex align-items-center">
   <div>
     <label class="mr-1">Punto : </label>
@@ -72,7 +72,6 @@
       <label class="mr-1"
         >Factura : {{ this.pto_vta }} - {{ this.factura_nro }}
       </label>
-
       <p-dropdown
         class="mr-3"
         [options]="elementosComprobante"
@@ -81,7 +80,6 @@
         optionLabel="descripcion"
         placeholder="Factura"
       ></p-dropdown>
-
       <p-dropdown
         class="ml-3"
         [options]="elementosConcepto"
@@ -89,10 +87,37 @@
         optionLabel="descripcion"
         placeholder="Concepto"
       ></p-dropdown>
+      <label class="mr-1 ml-1">Crédito </label>
+
+      <p-inputSwitch class="m-1" [(ngModel)]="credito"></p-inputSwitch>
     </div>
   </div>
 </div>
 
+<!-- COMPROBANTE PARA NOTA DE CREDITO -->
+<div *ngIf="credito">
+  <hr />
+
+  <div class="d-flex align-items-center mt-2">
+    <div class="col-2 ml-5 mr-2">
+      <input
+        placeholder="Nota de crédito número"
+        type="number"
+        class="form-control-sm mr-2"
+        [(ngModel)]="comprobante_credito"
+      />
+    </div>
+
+    <p-dropdown
+      class="mr-3"
+      [options]="elementosComprobante"
+      [(ngModel)]="elementoComprobanteCredito"
+      (onHide)="obtenerUltimaFacturaCredito()"
+      optionLabel="descripcion"
+      placeholder="Factura"
+    ></p-dropdown>
+  </div>
+</div>
 <hr />
 <div class="row ml-5 mr-2 mt-3 d-flex align-items-center">
   <label class="mr-2 mt-1">Condición IVA :</label>
